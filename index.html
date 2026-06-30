@@ -1,0 +1,3125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioGenética Interactiva - Del ADN a la Herencia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 60px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .section-title {
+            color: #2a5298;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 4px solid #f5576c;
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-icon {
+            font-size: 2.5rem;
+        }
+
+        /* Concept Maps */
+        .concept-map {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .concept-map::before {
+            content: '🗺️';
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 3rem;
+            opacity: 0.3;
+        }
+
+        .map-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .map-node {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #2a5298;
+            transition: all 0.3s;
+        }
+
+        .map-node:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .map-node h4 {
+            color: #2a5298;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Content Boxes */
+        .content-box {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-left: 6px solid #2a5298;
+        }
+
+        .content-box h3 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .content-box ul {
+            margin-left: 2rem;
+        }
+
+        .content-box li {
+            margin: 0.5rem 0;
+        }
+
+        /* Images Grid */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .image-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .image-card:hover {
+            transform: scale(1.03);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .image-caption {
+            padding: 1rem;
+            background: #f8f9fa;
+            text-align: center;
+            font-weight: bold;
+            color: #2a5298;
+        }
+
+        /* Animations Section */
+        .animation-container {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .animation-box {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 1rem 0;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Video Section */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .video-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .video-placeholder:hover {
+            transform: scale(1.05);
+        }
+
+        .video-info {
+            padding: 1.5rem;
+        }
+
+        .video-info h4 {
+            color: #2a5298;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .quiz-question {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .quiz-option {
+            padding: 1rem;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            background: #e9ecef;
+            border-color: #2a5298;
+        }
+
+        .quiz-option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .quiz-option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+
+        /* Flashcards */
+        .flashcard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .flashcard {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            backface-visibility: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .flashcard-front {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .flashcard-back {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        /* Tables */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        /* Glossary */
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .glossary-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid #f5576c;
+        }
+
+        .glossary-term {
+            color: #2a5298;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Q&A Section */
+        .qa-container {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .qa-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .qa-question {
+            color: #2a5298;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+        }
+
+        .qa-answer {
+            display: none;
+            padding-top: 1rem;
+            border-top: 2px solid #e9ecef;
+            margin-top: 1rem;
+        }
+
+        .qa-answer.show {
+            display: block;
+        }
+
+        /* Podcast Section */
+        .podcast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .podcast-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .podcast-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .podcast-player {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            color: white;
+        }
+
+        /* Summary Box */
+        .summary-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 3px solid #2a5298;
+        }
+
+        .summary-box h3 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .summary-points {
+            list-style: none;
+        }
+
+        .summary-points li {
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: white;
+            border-radius: 8px;
+            padding-left: 2.5rem;
+            position: relative;
+        }
+
+        .summary-points li::before {
+            content: '✓';
+            position: absolute;
+            left: 1rem;
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* Interactive Elements */
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.3s;
+            margin: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffeaa7 0%, #ffeaa7 100%);
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* Process Diagram */
+        .process-diagram {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .process-step {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .process-step::after {
+            content: '↓';
+            position: absolute;
+            bottom: -2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            color: #2a5298;
+        }
+
+        .process-step:last-child::after {
+            display: none;
+        }
+
+        .step-number {
+            background: #2a5298;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🧬 BioGenética Interactiva</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#conceptos">Conceptos</a></li>
+                <li><a href="#adn">ADN</a></li>
+                <li><a href="#replicacion">Replicación</a></li>
+                <li><a href="#meiosis">Meiosis</a></li>
+                <li><a href="#transcripcion">Transcripción</a></li>
+                <li><a href="#traduccion">Traducción</a></li>
+                <li><a href="#regulacion">Regulación</a></li>
+                <li><a href="#mendel">Mendel</a></li>
+                <li><a href="#glosario">Glosario</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <h1>🧬 Del Gen a la Proteína</h1>
+        <p>Explora los fascinantes procesos de la genética molecular: desde la estructura del ADN hasta la expresión génica y las leyes de la herencia</p>
+    </section>
+
+    <div class="container">
+        <!-- Basic Concepts Section -->
+        <section class="section-card" id="conceptos">
+            <h2 class="section-title">
+                <span class="section-icon">📚</span>
+                Conceptos Básicos Fundamentales
+            </h2>
+            
+            <div class="content-box">
+                <h3>🎯 Objetivos de Aprendizaje</h3>
+                <ul>
+                    <li>Comprender el ADN como material genético y su estructura molecular</li>
+                    <li>Analizar los mecanismos de replicación del ADN y su importancia</li>
+                    <li>Diferenciar entre mitosis y meiosis, y sus implicaciones biológicas</li>
+                    <li>Describir los procesos de transcripción y traducción</li>
+                    <li>Entender la regulación de la expresión génica y epigenética</li>
+                    <li>Aplicar las leyes de Mendel en problemas de herencia</li>
+                </ul>
+            </div>
+
+            <div class="concept-map">
+                <h3>🗺️ Mapa Conceptual General</h3>
+                <div class="map-container">
+                    <div class="map-node">
+                        <h4>ADN</h4>
+                        <p>Material genético que almacena la información hereditaria en secuencias de nucleótidos</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Replicación</h4>
+                        <p>Proceso semiconservativo que duplica el ADN antes de la división celular</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Expresión Génica</h4>
+                        <p>Transcripción (ADN→ARN) y Traducción (ARN→Proteína)</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>División Celular</h4>
+                        <p>Mitosis (células somáticas) y Meiosis (células germinales)</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Regulación</h4>
+                        <p>Control de la expresión génica mediante factores epigenéticos</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Herencia</h4>
+                        <p>Leyes de Mendel y patrones de transmisión de caracteres</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DNA as Genetic Material -->
+        <section class="section-card" id="adn">
+            <h2 class="section-title">
+                <span class="section-icon">🧬</span>
+                El ADN como Material Genético
+            </h2>
+
+            <div class="concept-map">
+                <h3>🗺️ Mapa Conceptual: Descubrimiento del ADN</h3>
+                <div class="map-container">
+                    <div class="map-node">
+                        <h4>1869 - Miescher</h4>
+                        <p>Descubre la "nucleína" en núcleos de glóbulos blancos</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>1928 - Griffith</h4>
+                        <p>Experimento de transformación bacteriana con Streptococcus pneumoniae</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>1944 - Avery, MacLeod, McCarty</h4>
+                        <p>Demuestran que el ADN es el material genético</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>1952 - Hershey y Chase</h4>
+                        <p>Experimento con fagos que confirma al ADN como material genético</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>1953 - Watson y Crick</h4>
+                        <p>Proponen el modelo de doble hélice del ADN</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Reglas de Chargaff</h4>
+                        <p>A=T y G=C (complementariedad de bases)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>🔬 Experimentos Clave</h3>
+                <h4>Experimento de Griffith (1928)</h4>
+                <ul>
+                    <li><strong>Cepa S (lisa):</strong> Virulenta, con cápsula, letal para ratones</li>
+                    <li><strong>Cepa R (rugosa):</strong> No virulenta, sin cápsula, no letal</li>
+                    <li><strong>Resultado clave:</strong> Cepa R viva + Cepa S muerta por calor → Ratón muere</li>
+                    <li><strong>Conclusión:</strong> Principio transformante pasa de S a R</li>
+                </ul>
+
+                <h4>Experimento de Avery, MacLeod y McCarty (1944)</h4>
+                <ul>
+                    <li>Trataron extracto de cepa S con enzimas específicas:</li>
+                    <li>Proteinasas → Transformación ocurre</li>
+                    <li>Ribonucleasas → Transformación ocurre</li>
+                    <li>Desoxirribonucleasas → NO hay transformación</li>
+                    <li><strong>Conclusión:</strong> El ADN es el material genético</li>
+                </ul>
+
+                <h4>Experimento de Hershey y Chase (1952)</h4>
+                <ul>
+                    <li>Marcaron proteínas con ³⁵S y ADN con ³²P</li>
+                    <li>Infectaron bacterias con fagos marcados</li>
+                    <li>El ³²P (ADN) entró a las bacterias</li>
+                    <li>El ³⁵S (proteínas) quedó fuera</li>
+                    <li><strong>Conclusión:</strong> El ADN es el material hereditario</li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3>📐 Estructura del ADN - Modelo de Watson y Crick</h3>
+                <ul>
+                    <li><strong>Doble hélice:</strong> Dos cadenas antiparalelas enrolladas</li>
+                    <li><strong>Esqueleto:</strong> Azúcar-fosfato en el exterior</li>
+                    <li><strong>Bases nitrogenadas:</strong> En el interior, unidas por puentes de hidrógeno</li>
+                    <li><strong>Apareamiento:</strong> A-T (2 puentes H), G-C (3 puentes H)</li>
+                    <li><strong>Diámetro:</strong> 2 nm</li>
+                    <li><strong>Paso de hélice:</strong> 3.4 nm por vuelta completa</li>
+                    <li><strong>Distancia entre pares:</strong> 0.34 nm</li>
+                    <li><strong>Direccionalidad:</strong> 5'→3' y 3'→5' (antiparalelas)</li>
+                </ul>
+            </div>
+
+            <div class="image-grid">
+                <div class="image-card">
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 250px; display: flex; align-items: center; justify-content: center; color: white; font-size: 5rem;">
+                        🧬
+                    </div>
+                    <div class="image-caption">Estructura de Doble Hélice del ADN</div>
+                </div>
+                <div class="image-card">
+                    <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 250px; display: flex; align-items: center; justify-content: center; color: white; font-size: 5rem;">
+                        🧪
+                    </div>
+                    <div class="image-caption">Experimentos de Identificación del ADN</div>
+                </div>
+            </div>
+
+            <div class="summary-box">
+                <h3>📝 Resumen: ADN como Material Genético</h3>
+                <ul class="summary-points">
+                    <li>El ADN fue identificado como material genético mediante experimentos de transformación bacteriana (Griffith, 1928) y estudios bioquímicos (Avery et al., 1944; Hershey y Chase, 1952)</li>
+                    <li>La estructura de doble hélice propuesta por Watson y Crick (1953) explica el almacenamiento y replicación de la información genética</li>
+                    <li>Las reglas de Chargaff (A=T, G=C) y los datos de difracción de rayos X de Rosalind Franklin fueron cruciales para el modelo</li>
+                    <li>El ADN está organizado en cromatina (eucromatina activa y heterocromatina inactiva) asociado a histonas</li>
+                    <li>Los cromosomas contienen telómeros (extremos), centrómeros (región de unión) y orígenes de replicación</li>
+                </ul>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="quiz-container">
+                <h3>📝 Cuestionario: ADN como Material Genético</h3>
+                
+                <div class="quiz-question">
+                    <p><strong>1. ¿Qué experimento demostró por primera vez el "principio transformante"?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) Hershey y Chase (1952)</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">B) Griffith (1928)</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) Avery, MacLeod y McCarty (1944)</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) Watson y Crick (1953)</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>2. Según las reglas de Chargaff, si un ADN tiene 30% de adenina, ¿cuánto tiene de citosina?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) 30%</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">B) 20%</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">C) 20%</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) 40%</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>3. ¿Qué isótopo radiactivo usaron Hershey y Chase para marcar el ADN?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) ³⁵S (azufre)</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">B) ³²P (fósforo)</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) ¹⁴C (carbono)</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) ¹⁵N (nitrógeno)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q&A Section -->
+            <div class="qa-container">
+                <h3>❓ Preguntas y Respuestas: ADN</h3>
+                
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleAnswer(this)">
+                        ¿Por qué el experimento de Griffith fue tan importante?
+                    </div>
+                    <div class="qa-answer">
+                        <p>El experimento de Griffith fue revolucionario porque demostró por primera vez que existía un "principio transformante" capaz de transferir información genética entre bacterias. Aunque no identificó que era ADN, sentó las bases para los experimentos posteriores de Avery, MacLeod y McCarty que sí lo identificaron.</p>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleAnswer(this)">
+                        ¿Cuál fue la contribución de Rosalind Franklin al descubrimiento de la estructura del ADN?
+                    </div>
+                    <div class="qa-answer">
+                        <p>Rosalind Franklin obtuvo la famosa "Fotografía 51" mediante difracción de rayos X, que mostraba un patrón en X característico de una estructura helicoidal. Sus datos fueron cruciales para que Watson y Crick determinaran que el ADN tenía una estructura de doble hélice con las bases hacia el interior y el esqueleto azúcar-fosfato hacia el exterior.</p>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question" onclick="toggleAnswer(this)">
+                        ¿Qué diferencia hay entre eucromatina y heterocromatina?
+                    </div>
+                    <div class="qa-answer">
+                        <p><strong>Eucromatina:</strong> Forma menos condensada, transcripcionalmente activa, genes expresados, coloración clara. <strong>Heterocromatina:</strong> Forma altamente condensada, transcripcionalmente inactiva, genes silenciados, coloración oscura. La heterocromatina puede ser constitutiva (siempre condensada, como en telómeros y centrómeros) o facultativa (condensada solo en ciertas células o etapas).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flashcards -->
+            <div class="section-card">
+                <h3>🃏 Flashcards: ADN</h3>
+                <div class="flashcard-container">
+                    <div class="flashcard" onclick="flipCard(this)">
+                        <div class="flashcard-front">
+                            <h4>¿Quién propuso el modelo de doble hélice?</h4>
+                        </div>
+                        <div class="flashcard-back">
+                            <p>Watson y Crick (1953), basándose en datos de Rosalind Franklin y las reglas de Chargaff</p>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="flipCard(this)">
+                        <div class="flashcard-front">
+                            <h4>Apareamiento de bases</h4>
+                        </div>
+                        <div class="flashcard-back">
+                            <p>A-T (2 puentes de hidrógeno)<br>G-C (3 puentes de hidrógeno)</p>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="flipCard(this)">
+                        <div class="flashcard-front">
+                            <h4>Reglas de Chargaff</h4>
+                        </div>
+                        <div class="flashcard-back">
+                            <p>A = T<br>G = C<br>Purinas = Pirimidinas</p>
+                        </div>
+                    </div>
+                    <div class="flashcard" onclick="flipCard(this)">
+                        <div class="flashcard-front">
+                            <h4>Experimento Hershey-Chase</h4>
+                        </div>
+                        <div class="flashcard-back">
+                            <p>³²P marca ADN (entra a bacteria)<br>³⁵S marca proteínas (queda fuera)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DNA Replication -->
+        <section class="section-card" id="replicacion">
+            <h2 class="section-title">
+                <span class="section-icon">🔄</span>
+                Mecanismos de Replicación del ADN
+            </h2>
+
+            <div class="concept-map">
+                <h3>🗺️ Mapa Conceptual: Replicación del ADN</h3>
+                <div class="map-container">
+                    <div class="map-node">
+                        <h4>Modelo Semiconservativo</h4>
+                        <p>Meselson y Stahl (1958): Cada hebra hija tiene una hebra parental y una nueva</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Origen de Replicación</h4>
+                        <p>Puntos específicos donde inicia la replicación (múltiples en eucariotas)</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Horquilla de Replicación</h4>
+                        <p>Zona en Y donde se separan las hebras y se sintetiza ADN nuevo</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Hebra Adelantada</h4>
+                        <p>Síntesis continua en dirección 5'→3' hacia la horquilla</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Hebra Retrasada</h4>
+                        <p>Síntesis discontinua (fragmentos de Okazaki) en dirección opuesta</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Enzimas Clave</h4>
+                        <p>Helicasa, Topoisomerasa, Primasa, ADN pol III, ADN pol I, Ligasa</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>🔬 Experimento de Meselson y Stahl (1958)</h3>
+                <p>Demostraron el modelo <span class="highlight">semiconservativo</span> de replicación:</p>
+                <ul>
+                    <li>Cultivaron E. coli en medio con ¹⁵N (nitrógeno pesado) por varias generaciones</li>
+                    <li>Transferieron a medio con ¹⁴N (nitrógeno ligero)</li>
+                    <li>Extrajeron ADN después de 1 y 2 generaciones</li>
+                    <li>Centrifugaron en gradiente de densidad</li>
+                    <li><strong>Resultado:</strong></li>
+                    <ul>
+                        <li>Generación 1: ADN de densidad intermedia (¹⁵N/¹⁴N)</li>
+                        <li>Generación 2: 50% intermedio, 50% ligero (¹⁴N/¹⁴N)</li>
+                    </ul>
+                    <li><strong>Conclusión:</strong> Confirma el modelo semiconservativo</li>
+                </ul>
+            </div>
+
+            <div class="process-diagram">
+                <h3>📋 Proceso Detallado de Replicación</h3>
+                
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Iniciación - Apertura de la Doble Hélice</h4>
+                        <p><strong>Proteínas iniciadoras</strong> se unen a orígenes de replicación. La <strong>helicasa</strong> rompe puentes de hidrógeno usando ATP, separando las hebras. La <strong>topoisomerasa</strong> (ADN girasa) evita el superenrollamiento cortando y uniendo temporalmente el ADN. Las <strong>proteínas de unión a cadena simple (SSB)</strong> estabilizan las hebras separadas.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Síntesis de Cebadores (Primers)</h4>
+                        <p>La <strong>ADN primasa</strong> (ARN polimerasa especializada) sintetiza cebadores de ARN cortos (10-12 nucleótidos) complementarios al molde. Estos proporcionan el extremo 3'-OH libre necesario para que la ADN polimerasa inicie la síntesis.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Elongación - Síntesis de ADN</h4>
+                        <p><strong>ADN polimerasa III</strong> (procariotas) o <strong>ADN pol δ/ε</strong> (eucariotas) añaden desoxirribonucleótidos al extremo 3' del cebador, formando enlaces fosfodiéster. La síntesis siempre es en dirección <span class="highlight">5'→3'</span>.</p>
+                        <ul>
+                            <li><strong>Hebra adelantada:</strong> Síntesis continua hacia la horquilla</li>
+                            <li><strong>Hebra retrasada:</strong> Síntesis discontinua en fragmentos de Okazaki (1000-2000 nt en procariotas, 100-200 nt en eucariotas)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Remoción de Cebadores y Unión</h4>
+                        <p>La <strong>ADN polimerasa I</strong> (procariotas) o <strong>RNasa H</strong> (eucariotas) elimina los cebadores de ARN y los reemplaza con ADN. La <strong>ADN ligasa</strong> sella los espacios entre fragmentos de Okazaki formando enlaces fosfodiéster, requiriendo ATP o NAD+ como fuente de energía.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>Terminación y Corrección de Errores</h4>
+                        <p>Las ADN polimerasas tienen actividad <strong>exonucleasa 3'→5'</strong> que corrige errores (proofreading). Si se incorpora un nucleótido incorrecto, la enzima lo elimina y lo reemplaza. La tasa de error final es de ~1 error por 10⁹ nucleótidos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>⚡ ¿Por qué la síntesis es solo en dirección 5'→3'?</h3>
+                <p>La dirección 5'→3' permite la corrección de errores:</p>
+                <ul>
+                    <li>Los nucleótidos entrantes son trifosfatos (dNTPs) que aportan la energía para formar el enlace fosfodiéster</li>
+                    <li>Si ocurre un error, la exonucleasa 3'→5' elimina el nucleótido incorrecto del extremo 3'</li>
+                    <li>Si la síntesis fuera 3'→5', el extremo 5' tendría el trifosfato y al corregir un error se perdería la energía necesaria para continuar</li>
+                    <li>La dirección 5'→3' permite que la cadena crezca continuamente incluso después de correcciones</li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3>🧬 Replicación de Telómeros</h3>
+                <p>Problema: En el extremo 5' de la hebra retrasada, al eliminar el último cebador de ARN no hay extremo 3' disponible para reemplazarlo, causando acortamiento progresivo.</p>
+                <p><strong>Solución: Telomerasa</strong></p>
+                <ul>
+                    <li>Enzima con ARN molde propio (ribonucleoproteína)</li>
+                    <li>Añade repeticiones teloméricas (TTAGGG en humanos) al extremo 3'</li>
+                    <li>Extiende el molde para que la ADN polimerasa complete la hebra complementaria</li>
+                    <li>Activa en células germinales, stem cells y cancerosas; inactiva en la mayoría de células somáticas</li>
+                    <li>Relacionada con envejecimiento y cáncer</li>
+                </ul>
+            </div>
+
+            <div class="image-grid">
+                <div class="image-card">
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 250px; display: flex; align-items: center; justify-content: center; color: white; font-size: 5rem;">
+                        🔄
+                    </div>
+                    <div class="image-caption">Horquilla de Replicación - Proceso Completo</div>
+                </div>
+                <div class="image-card">
+                    <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 250px; display: flex; align-items: center; justify-content: center; color: white; font-size: 5rem;">
+                        🧪
+                    </div>
+                    <div class="image-caption">Experimento de Meselson-Stahl</div>
+                </div>
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Enzima/Proteína</th>
+                        <th>Función</th>
+                        <th>Direccionalidad</th>
+                        <th>Requiere Energy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Helicasa</strong></td>
+                        <td>Separa hebras de ADN rompiendo puentes H</td>
+                        <td>5'→3'</td>
+                        <td>ATP</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Topoisomerasa</strong></td>
+                        <td>Alivia tensión por superenrollamiento</td>
+                        <td>-</td>
+                        <td>ATP (Tipo II)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Primasa</strong></td>
+                        <td>Sintetiza cebadores de ARN</td>
+                        <td>5'→3'</td>
+                        <td>NTPs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ADN Pol III</strong></td>
+                        <td>Síntesis principal de ADN (elongación)</td>
+                        <td>5'→3'</td>
+                        <td>dNTPs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ADN Pol I</strong></td>
+                        <td>Remueve cebadores, rellena espacios</td>
+                        <td>5'→3' y 3'→5' (exonucleasa)</td>
+                        <td>dNTPs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ADN Ligasa</strong></td>
+                        <td>Une fragmentos de Okazaki</td>
+                        <td>-</td>
+                        <td>ATP/NAD+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Proteínas SSB</strong></td>
+                        <td>Estabilizan hebras simples</td>
+                        <td>-</td>
+                        <td>No</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="summary-box">
+                <h3>📝 Resumen: Replicación del ADN</h3>
+                <ul class="summary-points">
+                    <li>La replicación es semiconservativa (Meselson y Stahl, 1958): cada molécula hija tiene una hebra parental y una nueva</li>
+                    <li>Inicia en orígenes de replicación específicos; en eucariotas hay múltiples orígenes por cromosoma</li>
+                    <li>La helicasa separa las hebras, la topoisomerasa alivia la tensión, y las proteínas SSB estabilizan</li>
+                    <li>La ADN polimerasa solo sintetiza en dirección 5'→3', requiriendo un cebador de ARN con extremo 3'-OH libre</li>
+                    <li>Hebra adelantada: síntesis continua; Hebra retrasada: fragmentos de Okazaki discontinuos</li>
+                    <li>ADN pol I remueve cebadores y rellena; ADN ligasa une fragmentos</li>
+                    <li>Actividad exonucleasa 3'→5' permite corrección de errores (proofreading)</li>
+                    <li>La telomerasa resuelve el problema de replicación de extremos en eucariotas</li>
+                </ul>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="quiz-container">
+                <h3>📝 Cuestionario: Replicación del ADN</h3>
+                
+                <div class="quiz-question">
+                    <p><strong>1. ¿En qué dirección sintetiza ADN la ADN polimerasa?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) 3'→5'</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">B) 5'→3'</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) Ambas direcciones</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) Depende de la hebra</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>2. ¿Qué enzima elimina los cebadores de ARN en procariotas?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) ADN polimerasa III</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">B) ADN polimerasa I</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) Helicasa</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) Ligasa</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>3. ¿Cuál es la función de la telomerasa?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) Iniciar la replicación</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">B) Corregir errores</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">C) Alargar los extremos de los cromosomas</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) Unir fragmentos de Okazaki</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Meiosis Section -->
+        <section class="section-card" id="meiosis">
+            <h2 class="section-title">
+                <span class="section-icon">🔬</span>
+                Meiosis
+            </h2>
+
+            <div class="concept-map">
+                <h3>🗺️ Mapa Conceptual: Meiosis</h3>
+                <div class="map-container">
+                    <div class="map-node">
+                        <h4>Definición</h4>
+                        <p>División celular reduccional que produce gametos haploides (n) a partir de células diploides (2n)</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Meiosis I</h4>
+                        <p>Reduccional: Separa cromosomas homólogos. Profase I con crossing over</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Meiosis II</h4>
+                        <p>Ecuacional: Separa cromátides hermanas (similar a mitosis)</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Variabilidad Genética</h4>
+                        <p>Crossing over (Profase I) y Distribución independiente (Metafase I)</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Resultado</h4>
+                        <p>4 células haploides genéticamente diferentes</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Aneuploidías</h4>
+                        <p>No disyunción: Down (trisomía 21), Turner (X0), Klinefelter (XXY)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>📊 Comparación: Mitosis vs Meiosis</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>Mitosis</th>
+                            <th>Meiosis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Tipo de célula</strong></td>
+                            <td>Somáticas</td>
+                            <td>Germinales</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Número de divisiones</strong></td>
+                            <td>1</td>
+                            <td>2 (Meiosis I y II)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Células resultantes</strong></td>
+                            <td>2 diploides (2n)</td>
+                            <td>4 haploides (n)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sinapsis de homólogos</strong></td>
+                            <td>No ocurre</td>
+                            <td>Profase I (complejo sinaptonémico)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Crossing over</strong></td>
+                            <td>No ocurre</td>
+                            <td>Profase I (quiasmas)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Alineación en metafase</strong></td>
+                            <td>Cromosomas individuales</td>
+                            <td>Metafase I: Pares de homólogos</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Separación en anafase</strong></td>
+                            <td>Cromátides hermanas</td>
+                            <td>Anafase I: Homólogos<br>Anafase II: Cromátides</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Variabilidad genética</strong></td>
+                            <td>Células idénticas</td>
+                            <td>Células genéticamente diferentes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Función</strong></td>
+                            <td>Crecimiento, reparación</td>
+                            <td>Producción de gametos</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="process-diagram">
+                <h3>📋 Fases Detalladas de la Meiosis</h3>
+                
+                <h4 style="color: #2a5298; margin: 1.5rem 0 1rem 0; font-size: 1.5rem;">MEIOSIS I (División Reduccional)</h4>
+                
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Profase I - La más compleja y larga</h4>
+                        <p><strong>Subfases:</strong></p>
+                        <ul>
+                            <li><strong>Leptoteno:</strong> Cromosomas comienzan a condensarse, visibles como hebras delgadas</li>
+                            <li><strong>Cigoteno:</strong> Sinapsis de cromosomas homólogos, formación del <span class="highlight">complejo sinaptonémico</span> (estructura proteica que une homólogos)</li>
+                            <li><strong>Paquiteno:</strong> Sinapsis completa, formación de bivalentes (tétradas: 4 cromátides), ocurre <span class="highlight">crossing over</span> (intercambio de segmentos entre cromátides no hermanas)</li>
+                            <li><strong>Diploteno:</strong> Los homólogos comienzan a separarse pero permanecen unidos en <span class="highlight">quiasmas</span> (sitios de crossing over)</li>
+                            <li><strong>Diacinesis:</strong> Máxima condensación, desaparece el complejo sinaptonémico, se fragmenta la envoltura nuclear</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Metafase I</h4>
+                        <p>Los pares de cromosomas homólogos (bivalentes/tétradas) se alinean en el plano ecuatorial. Los microtúbulos del huso se unen a los cinetocoros de cada par de homólogos. La <span class="highlight">orientación aleatoria</span> de cada par genera variabilidad (2ⁿ combinaciones posibles).</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Anafase I</h4>
+                        <p>Los <span class="highlight">cromosomas homólogos</span> se separan y migran a polos opuestos. Las cromátides hermanas permanecen unidas por el centrómero. Esto reduce el número cromosómico a la mitad (de 2n a n).</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Telofase I y Citocinesis</h4>
+                        <p>Se forman dos núcleos haploides (pero cada cromosoma tiene 2 cromátides). Ocurre citocinesis formando dos células haploides. En algunas especies no hay telofase I y se pasa directamente a Meiosis II.</p>
+                    </div>
+                </div>
+
+                <h4 style="color: #2a5298; margin: 1.5rem 0 1rem 0; font-size: 1.5rem;">MEIOSIS II (División Ecuacional)</h4>
+                <p style="background: #e0c3fc; padding: 1rem; border-radius: 8px; margin: 1rem 0;">Similar a mitosis pero con células haploides. No hay replicación de ADN entre Meiosis I y II.</p>
+
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>Profase II</h4>
+                        <p>Se condensa la cromatina, se forma el huso acromático, desaparece la envoltura nuclear (si se formó en telofase I).</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h4>Metafase II</h4>
+                        <p>Los cromosomas (con 2 cromátides) se alinean individualmente en el plano ecuatorial.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">7</div>
+                    <div class="step-content">
+                        <h4>Anafase II</h4>
+                        <p>Se separan las <span class="highlight">cromátides hermanas</span> (ahora cromosomas independientes) que migran a polos opuestos.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">8</div>
+                    <div class="step-content">
+                        <h4>Telofase II y Citocinesis</h4>
+                        <p>Se forman 4 núcleos haploides con cromosomas de una sola cromátide. Citocinesis produce <span class="highlight">4 células haploides genéticamente diferentes</span>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>🎲 Fuentes de Variabilidad Genética en Meiosis</h3>
+                <ol>
+                    <li><strong>Crossing Over (Profase I):</strong>
+                        <ul>
+                            <li>Intercambio físico de segmentos entre cromátides no hermanas de homólogos</li>
+                            <li>Genera <span class="highlight">recombinación genética</span>: nuevas combinaciones de alelos</li>
+                            <li>Los quiasmas son la evidencia visible del crossing over</li>
+                            <li>Cada crossing over produce 2 cromátides recombinantes y 2 parentales</li>
+                        </ul>
+                    </li>
+                    <li><strong>Distribución Independiente (Metafase I):</strong>
+                        <ul>
+                            <li>Cada par de homólogos se orienta independientemente</li>
+                            <li>En humanos (n=23): 2²³ = 8,388,608 combinaciones posibles solo por distribución</li>
+                            <li>Con crossing over: >70 billones de combinaciones posibles</li>
+                        </ul>
+                    </li>
+                    <li><strong>Fecundación Aleatoria:</strong>
+                        <ul>
+                            <li>Cualquier espermatozoide puede fecundar cualquier óvulo</li>
+                            <li>En humanos: (2²³)² = ~70 billones de combinaciones posibles</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="content-box">
+                <h3>⚠️ Errores en Meiosis: No Disyunción</h3>
+                <p>Fallo en la separación de cromosomas homólogos (Meiosis I) o cromátides hermanas (Meiosis II), produciendo gametos con número anormal de cromosomas.</p>
+                
+                <h4>Aneuploidías Comunes:</h4>
+                <ul>
+                    <li><strong>Síndrome de Down (Trisomía 21):</strong> 47,XX,+21 o 47,XY,+21
+                        <ul>
+                            <li>Incidencia: 1/800 nacimientos</li>
+                            <li>Características: Retraso mental, rasgos faciales característicos, cardiopatías</li>
+                        </ul>
+                    </li>
+                    <li><strong>Síndrome de Turner (Monosomía X):</strong> 45,X0
+                        <ul>
+                            <li>Mujeres con un solo cromosoma X</li>
+                            <li>Esterilidad, cuello alado, baja estatura</li>
+                        </ul>
+                    </li>
+                    <li><strong>Síndrome de Klinefelter:</strong> 47,XXY
+                        <ul>
+                            <li>Hombres con cromosoma X extra</li>
+                            <li>Incidencia: 1/1000 hombres</li>
+                            <li>Esterilidad, ginecomastia</li>
+                        </ul>
+                    </li>
+                    <li><strong>Síndrome del Triple X:</strong> 47,XXX
+                        <ul>
+                            <li>Mujeres con X extra</li>
+                            <li>Incidencia: 1/1000 mujeres</li>
+                        </ul>
+                    </li>
+                    <li><strong>Síndrome XYY:</strong> 47,XYY
+                        <ul>
+                            <li>Hombres con Y extra</li>
+                            <li>Mayor estatura, fertilidad normal</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="summary-box">
+                <h3>📝 Resumen: Meiosis</h3>
+                <ul class="summary-points">
+                    <li>La meiosis es una división reduccional que produce 4 células haploides (n) a partir de una diploide (2n)</li>
+                    <li>Meiosis I es reduccional (separa homólogos); Meiosis II es ecuacional (separa cromátides)</li>
+                    <li>Profase I es la fase más larga y compleja, con 5 subfases: leptoteno, cigoteno, paquiteno, diploteno y diacinesis</li>
+                    <li>El crossing over en paquiteno genera recombinación genética entre homólogos</li>
+                    <li>La distribución independiente en metafase I genera 2ⁿ combinaciones posibles</li>
+                    <li>La no disyunción produce aneuploidías: Down (trisomía 21), Turner (X0), Klinefelter (XXY)</li>
+                    <li>La meiosis es esencial para mantener constante el número cromosómico de la especie y generar variabilidad</li>
+                </ul>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="quiz-container">
+                <h3>📝 Cuestionario: Meiosis</h3>
+                
+                <div class="quiz-question">
+                    <p><strong>1. ¿En qué fase de la meiosis ocurre el crossing over?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) Metafase I</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">B) Paquiteno (Profase I)</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) Anafase II</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) Telofase I</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>2. ¿Cuántas combinaciones cromosómicas posibles hay en humanos solo por distribución independiente?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) 2²³</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">B) 2²³ = 8,388,608</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) 23²</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) 46!</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>3. ¿Qué síndrome resulta de una no disyunción del cromosoma 21?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) Turner</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">B) Klinefelter</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">C) Down</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) Triple X</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Transcription Section -->
+        <section class="section-card" id="transcripcion">
+            <h2 class="section-title">
+                <span class="section-icon">📝</span>
+                Transcripción
+            </h2>
+
+            <div class="concept-map">
+                <h3>🗺️ Mapa Conceptual: Transcripción</h3>
+                <div class="map-container">
+                    <div class="map-node">
+                        <h4>Definición</h4>
+                        <p>Síntesis de ARN a partir de molde de ADN. Copia la información de genes a ARN</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>ARN Polimerasa</h4>
+                        <p>Enzima que sintetiza ARN en dirección 5'→3' usando ADN como molde</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Promotor</h4>
+                        <p>Región de ADN que señala el inicio del gen (caja TATA en eucariotas)</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Procesamiento</h4>
+                        <p>Eucariotas: Cap 5', poli-A 3', splicing de intrones</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Tipos de ARN</h4>
+                        <p>ARNm (mensajero), ARNr (ribosomal), ARNt (transferencia)</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>ARN Polimerasas</h4>
+                        <p>Eucariotas: I (ARNr), II (ARNm), III (ARNt, ARNr 5S)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>🔬 Proceso de Transcripción Detallado</h3>
+                
+                <h4>1. INICIACIÓN</h4>
+                <ul>
+                    <li><strong>Reconocimiento del promotor:</strong>
+                        <ul>
+                            <li>Procariotas: Factor sigma de la ARN polimerasa reconoce secuencias -35 (TTGACA) y -10 (TATAAT, caja Pribnow)</li>
+                            <li>Eucariotas: Factores de transcripción (TFIID con TBP) reconocen caja TATA (~-30) y otros elementos</li>
+                        </ul>
+                    </li>
+                    <li><strong>Formación del complejo de iniciación:</strong>
+                        <ul>
+                            <li>Procariotas: Holoenzima (ARN pol + factor sigma) se une al promotor</li>
+                            <li>Eucariotas: Múltiples factores generales de transcripción (TFIIA, B, D, E, F, H) + ARN pol II forman el complejo de pre-iniciación</li>
+                        </ul>
+                    </li>
+                    <li><strong>Apertura del ADN:</strong> La ARN polimerasa separa ~14 pb de ADN formando la burbuja de transcripción</li>
+                    <li><strong>Síntesis del primer fosfodiéster:</strong> Se incorporan los primeros ribonucleótidos complementarios al molde</li>
+                </ul>
+
+                <h4>2. ELONGACIÓN</h4>
+                <ul>
+                    <li>La ARN polimerasa avanza en dirección 3'→5' sobre el molde de ADN</li>
+                    <li>Sintetiza ARN en dirección <span class="highlight">5'→3'</span> añadiendo ribonucleótidos complementarios</li>
+                    <li>Apareamiento: A-UTP, T-ATP, G-CTP, C-GTP (el ARN usa uracilo en lugar de timina)</li>
+                    <li>La burbuja de transcripción (~14 pb) se desplaza con la enzima</li>
+                    <li>Se forma un híbrido ADN-ARN de ~8-9 pb dentro de la enzima</li>
+                    <li>Velocidad: ~40-80 nucleótidos/segundo en eucariotas</li>
+                    <li>La ARN polimerasa no requiere cebador (a diferencia de ADN polimerasa)</li>
+                </ul>
+
+                <h4>3. TERMINACIÓN</h4>
+                <ul>
+                    <li><strong>Procariotas - Dos mecanismos:</strong>
+                        <ul>
+                            <li><strong>Dependiente de Rho:</strong> Proteína Rho se une a secuencia rica en C del ARN, avanza hasta la polimerasa y la desprende</li>
+                            <li><strong>Independiente de Rho (intrínseca):</strong> Secuencia palindrómica forma horquilla en el ARN + secuencia poli-U que debilita el híbrido ADN-ARN</li>
+                        </ul>
+                    </li>
+                    <li><strong>Eucariotas:</strong>
+                        <ul>
+                            <li>ARN pol II transcribe más allá del sitio de poliadenilación (AAUAAA)</li>
+                            <li>Factores de terminación reconocen la señal y liberan el transcrito</li>
+                            <li>El ARN es cortado y se añade la cola poli-A</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3>🎯 ARN Polimerasas en Eucariotas</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>ARN Polimerasa</th>
+                            <th>Localización</th>
+                            <th>Transcribe</th>
+                            <th>Sensibilidad a α-amanitina</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ARN Pol I</strong></td>
+                            <td>Nucléolo</td>
+                            <td>ARNr 28S, 18S, 5.8S (pre-ARNr 45S)</td>
+                            <td>Resistente</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ARN Pol II</strong></td>
+                            <td>Nucleoplasma</td>
+                            <td>ARNm, ARNsn, ARNnc pequeños, microARN</td>
+                            <td>Muy sensible</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ARN Pol III</strong></td>
+                            <td>Nucleoplasma</td>
+                            <td>ARNt, ARNr 5S, ARNsn U6, otros ARN pequeños</td>
+                            <td>Intermedia</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-box">
+                <h3>✂️ Procesamiento del ARN en Eucariotas</h3>
+                <p>El pre-ARNm (transcrito primario) sufre modificaciones antes de salir del núcleo:</p>
+                
+                <h4>1. Cap 5' (Caperuza)</h4>
+                <ul>
+                    <li>Añadido co-transcripcionalmente después de ~25-30 nt</li>
+                    <li>7-metilguanosina unida por enlace 5'-5' trifosfato</li>
+                    <li><strong>Funciones:</strong>
+                        <ul>
+                            <li>Protege contra exonucleasas 5'→3'</li>
+                            <li>Reconocimiento por ribosoma en traducción</li>
+                            <li>Exportación nuclear</li>
+                            <li>Splicing eficiente</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>2. Poliadenilación 3'</h4>
+                <ul>
+                    <li>Señal de poliadenilación: AAUAAA (10-30 nt antes del sitio de corte)</li>
+                    <li>Complejo de poliadenilación corta el ARN y añade ~200-250 adeninas</li>
+                    <li><strong>Funciones:</strong>
+                        <ul>
+                            <li>Estabilidad del ARNm</li>
+                            <li>Exportación nuclear</li>
+                            <li>Traducción eficiente</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>3. Splicing (Empalme)</h4>
+                <ul>
+                    <li>Eliminación de <span class="highlight">intrones</span> (secuencias no codificantes) y unión de <span class="highlight">exones</span> (secuencias codificantes)</li>
+                    <li>Realizado por el <span class="highlight">espliceosoma</span>: complejo de 5 snRNPs (U1, U2, U4, U5, U6) + proteínas</li>
+                    <li><strong>Señales de splicing:</strong>
+                        <ul>
+                            <li>Extremo 5' del intrón: GU</li>
+                            <li>Extremo 3' del intrón: AG</li>
+                            <li>Punto de ramificación: A (20-50 nt antes del 3')</li>
+                        </ul>
+                    </li>
+                    <li><strong>Mecanismo:</strong>
+                        <ol>
+                            <li>U1 se une al sitio 5' (GU)</li>
+                            <li>U2 se une al punto de ramificación (A)</li>
+                            <li>Complejo U4/U6•U5 se une</li>
+                            <li>Reordenamiento: U1 y U4 se liberan</li>
+                            <li>Primera transesterificación: El OH 2' de la A del punto de ramificación ataca el 5' del intrón, formando estructura de lazo (lariat)</li>
+                            <li>Segunda transesterificación: El OH 3' del exón upstream ataca el 3' del intrón, uniendo exones y liberando el intrón en forma de lazo</li>
+                        </ol>
+                    </li>
+                    <li><strong>Splicing alternativo:</strong>
+                        <ul>
+                            <li>Un mismo gen puede producir diferentes ARNm (y proteínas) mediante inclusión/exclusión diferencial de exones</li>
+                            <li>Tipos: Omisión de exón, exones mutuamente exclusivos, retención de intrón, sitios alternativos 5' o 3'</li>
+                            <li>Ejemplo: Gen de α-tropomiosina produce diferentes isoformas en músculo estriado, liso, fibroblastos y cerebro</li>
+                            <li>>95% de genes humanos con múltiples exones sufren splicing alternativo</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3>🧬 Diferencias: ARNm Procariota vs Eucariota</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>Procariotas</th>
+                            <th>Eucariotas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Estructura</strong></td>
+                            <td>Policistrónico (múltiples genes)</td>
+                            <td>Monocistrónico (un gen)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cap 5'</strong></td>
+                            <td>Ausente</td>
+                            <td>7-metilguanosina</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cola poli-A</strong></td>
+                            <td>Corta o ausente</td>
+                            <td>~200-250 adeninas</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Intrones</strong></td>
+                            <td>Raros</td>
+                            <td>Comunes (splicing necesario)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Transcripción y traducción</strong></td>
+                            <td>Acopladas (citoplasma)</td>
+                            <td>Separadas (núcleo/citoplasma)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vida media</strong></td>
+                            <td>Corta (minutos)</td>
+                            <td>Larga (horas a días)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="summary-box">
+                <h3>📝 Resumen: Transcripción</h3>
+                <ul class="summary-points">
+                    <li>La transcripción es la síntesis de ARN a partir de ADN molde, catalizada por ARN polimerasa en dirección 5'→3'</li>
+                    <li>Inicia en promotores: procariotas (-35 y -10); eucariotas (caja TATA y factores de transcripción)</li>
+                    <li>Eucariotas tienen 3 ARN polimerasas: I (ARNr), II (ARNm), III (ARNt, ARNr 5S)</li>
+                    <li>El pre-ARNm eucariota sufre procesamiento: cap 5', poli-A 3', y splicing de intrones</li>
+                    <li>El espliceosoma (snRNPs) elimina intrones mediante dos reacciones de transesterificación</li>
+                    <li>El splicing alternativo permite que un gen produzca múltiples proteínas diferentes</li>
+                    <li>En procariotas, transcripción y traducción son acopladas; en eucariotas están separadas espacial y temporalmente</li>
+                </ul>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="quiz-container">
+                <h3>📝 Cuestionario: Transcripción</h3>
+                
+                <div class="quiz-question">
+                    <p><strong>1. ¿En qué dirección sintetiza ARN la ARN polimerasa?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) 3'→5'</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">B) 5'→3'</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) Ambas</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) Depende del gen</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>2. ¿Qué ARN polimerasa transcribe ARNm en eucariotas?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) ARN Pol I</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">B) ARN Pol II</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) ARN Pol III</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) Todas</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>3. ¿Qué secuencia señala el sitio de poliadenilación?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">A) AAUAAA</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">B) TATAAA</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) AUG</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) GU-AG</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Translation Section -->
+        <section class="section-card" id="traduccion">
+            <h2 class="section-title">
+                <span class="section-icon">🔤</span>
+                Traducción
+            </h2>
+
+            <div class="concept-map">
+                <h3>🗺️ Mapa Conceptual: Traducción</h3>
+                <div class="map-container">
+                    <div class="map-node">
+                        <h4>Código Genético</h4>
+                        <p>Triplete de nucleótidos (codón) → aminoácido. 64 codones, 20 aa, degenerado</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>ARNt</h4>
+                        <p>Adaptador: anticodón reconoce codón, extremo 3' lleva aminoácido</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Ribosoma</h4>
+                        <p>Maquinaria de síntesis: subunidades, sitios A, P, E</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Iniciación</h4>
+                        <p>Reconocimiento de AUG, ARNt iniciador (Met), ensamblaje ribosoma</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Elongación</h4>
+                        <p>Entrada ARNt, formación enlace peptídico, translocación</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Terminación</h4>
+                        <p>Codones stop (UAA, UAG, UGA), factores de liberación</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>🧬 El Código Genético</h3>
+                <h4>Características:</h4>
+                <ol>
+                    <li><strong>Triplete:</strong> Cada codón tiene 3 nucleótidos</li>
+                    <li><strong>Degenerado/Redundante:</strong> Múltiples codones codifican el mismo aminoácido (ej: 6 codones para Leu)</li>
+                    <li><strong>No ambiguo:</strong> Cada codón especifica un solo aminoácido</li>
+                    <li><strong>Casi universal:</strong> Mismo código en casi todos los organismos (excepciones: mitocondrias, algunos protozoarios)</li>
+                    <li><strong>No superpuesto:</strong> Cada nucleótido pertenece a un solo codón</li>
+                    <li><strong>Sin comas:</strong> Lectura continua sin separación entre codones</li>
+                    <li><strong>Marco de lectura:</strong> Importante leer en el marco correcto (3 posibles marcos)</li>
+                    <li><strong>Codones de inicio:</strong> AUG (Met) - también codifica Met interna</li>
+                    <li><strong>Codones de terminación:</strong> UAA (ocre), UAG (ambar), UGA (opal)</li>
+                </ol>
+
+                <h4>Desciframiento del Código:</h4>
+                <ul>
+                    <li><strong>Nirenberg y Matthaei (1961):</strong> Sistema libre de células + ARNm sintético (poli-U → polifenilalanina → UUU = Phe)</li>
+                    <li><strong>Khorana:</strong> Síntesis de ARN con secuencias repetitivas conocidas</li>
+                    <li><strong>Holley:</strong> Secuenciación del primer ARNt</li>
+                    <li>Para 1966 se había descifrado todo el código</li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3>🎯 Componentes de la Traducción</h3>
+                
+                <h4>1. ARN de Transferencia (ARNt)</h4>
+                <ul>
+                    <li><strong>Estructura:</strong>
+                        <ul>
+                            <li>70-90 nucleótidos</li>
+                            <li>Estructura secundaria en "hoja de trébol": brazo aceptor (3'-CCA), brazo D, brazo anticodón, brazo TΨC, brazo variable</li>
+                            <li>Estructura terciaria en "L"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Función:</strong> Adaptador que traduce lenguaje de nucleótidos a aminoácidos</li>
+                    <li><strong>Carga de ARNt:</strong>
+                        <ul>
+                            <li>Enzima: <span class="highlight">aminoacil-ARNt sintetasa</span> (20 diferentes, una por aa)</li>
+                            <li>Reacción: aa + ARNt + ATP → aminoacil-ARNt + AMP + PPi</li>
+                            <li>Alta especificidad: "doble filtro" asegura fidelidad</li>
+                            <li>El aa se une al OH 3' del residuo A terminal (CCA-3')</li>
+                        </ul>
+                    </li>
+                    <li><strong>Anticodón:</strong> Triplete complementario al codón del ARNm (lectura antiparalela 3'→5')</li>
+                    <li><strong>Wobble (balanceo):</strong>
+                        <ul>
+                            <li>Flexibilidad en el apareamiento de la 3ª base del codón (1ª del anticodón)</li>
+                            <li>G puede aparear con U o C</li>
+                            <li>U puede aparear con A o G</li>
+                            <li>I (inosina, modificada) puede aparear con U, C o A</li>
+                            <li>Explica degeneración del código: menos ARNt que codones (~45 ARNt vs 61 codones)</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>2. Ribosoma</h4>
+                <ul>
+                    <li><strong>Composición:</strong>
+                        <ul>
+                            <li>Procariotas (70S): Subunidad 50S (23S rRNA + 5S rRNA + ~34 proteínas) + 30S (16S rRNA + ~21 proteínas)</li>
+                            <li>Eucariotas (80S): Subunidad 60S (28S + 5.8S + 5S rRNA + ~49 proteínas) + 40S (18S rRNA + ~33 proteínas)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Sitios funcionales:</strong>
+                        <ul>
+                            <li><span class="highlight">Sitio A (aminoacil):</span> Entra el aminoacil-ARNt cargado</li>
+                            <li><span class="highlight">Sitio P (peptidil):</span> Contiene el ARNt con la cadena polipeptídica creciente</li>
+                            <li><span class="highlight">Sitio E (exit/salida):</span> ARNt descargado sale por aquí</li>
+                        </ul>
+                    </li>
+                    <li><strong>Funciones:</strong>
+                        <ul>
+                            <li>Decodificación del ARNm</li>
+                            <li>Catálisis de enlace peptídico (actividad peptidil transferasa del 23S/28S rRNA - ribozima)</li>
+                            <li>Translocación</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="process-diagram">
+                <h3>📋 Proceso Detallado de Traducción</h3>
+                
+                <h4 style="color: #2a5298; margin: 1.5rem 0 1rem 0; font-size: 1.5rem;">INICIACIÓN</h4>
+                
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Procariotas</h4>
+                        <ul>
+                            <li>Subunidad 30S se une a factores de iniciación (IF1, IF2, IF3)</li>
+                            <li>Reconoce secuencia <span class="highlight">Shine-Dalgarno</span> (AGGAGG) ~8 nt antes del AUG mediante complementariedad con 16S rRNA</li>
+                            <li>ARNt iniciador (fMet-ARNt^fMet) se une al codón AUG con ayuda de IF2-GTP</li>
+                            <li>Subunidad 50S se une, se hidroliza GTP, se liberan IFs</li>
+                            <li>Ribosoma 70S completo con fMet-ARNt en sitio P</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Eucariotas</h4>
+                        <ul>
+                            <li>Subunidad 40S se une a factores de iniciación (eIFs múltiples)</li>
+                            <li>Complejo se une al <span class="highlight">cap 5'</span> del ARNm (reconocido por eIF4E)</li>
+                            <li>Escanea el ARNm en dirección 5'→3' buscando el primer AUG (regla de Kozak: GCCRCCAUGG, donde R = purina)</li>
+                            <li>ARNt iniciador (Met-ARNt^Met) se une al AUG</li>
+                            <li>Subunidad 60S se une, se hidroliza GTP, se liberan eIFs</li>
+                            <li>Ribosoma 80S completo con Met-ARNt en sitio P</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4 style="color: #2a5298; margin: 1.5rem 0 1rem 0; font-size: 1.5rem;">ELONGACIÓN</h4>
+                
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Ciclo de Elongación (se repite por cada aminoácido)</h4>
+                        <p><strong>Paso 1 - Entrada del aminoacil-ARNt:</strong></p>
+                        <ul>
+                            <li>Aminoacil-ARNt cargado + EF-Tu (procariotas) o eEF1α (eucariotas) + GTP entran al sitio A</li>
+                            <li>El anticodón del ARNt reconoce el codón del ARNm</li>
+                            <li>Si es correcto: se hidroliza GTP, EF-Tu-GDP se libera</li>
+                            <li>Si es incorrecto: el ARNt se disocia rápidamente (proofreading)</li>
+                        </ul>
+                        
+                        <p><strong>Paso 2 - Formación del enlace peptídico:</strong></p>
+                        <ul>
+                            <li>La <span class="highlight">peptidil transferasa</span> (actividad catalítica del 23S/28S rRNA - ribozima) transfiere el polipéptido del ARNt en sitio P al aminoácido del ARNt en sitio A</li>
+                            <li>Se forma enlace peptídico entre el grupo carboxilo del último aa y el grupo amino del nuevo aa</li>
+                            <li>El ARNt en sitio P queda descargado; el ARNt en sitio A ahora tiene el polipéptido (una unidad más largo)</li>
+                        </ul>
+                        
+                        <p><strong>Paso 3 - Translocación:</strong></p>
+                        <ul>
+                            <li>EF-G (procariotas) o eEF2 (eucariotas) + GTP promueven el movimiento del ribosoma</li>
+                            <li>El ribosoma avanza 3 nucleótidos (un codón) en dirección 5'→3'</li>
+                            <li>ARNt descargado pasa de P → E y sale</li>
+                            <li>Peptidil-ARNt pasa de A → P</li>
+                            <li>Sitio A queda vacío y expone nuevo codón</li>
+                            <li>Se hidroliza GTP</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h4 style="color: #2a5298; margin: 1.5rem 0 1rem 0; font-size: 1.5rem;">TERMINACIÓN</h4>
+                
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Terminación</h4>
+                        <ul>
+                            <li>Cuando el ribosoma encuentra un <span class="highlight">codón de terminación</span> (UAA, UAG, UGA) en el sitio A</li>
+                            <li>No hay ARNt que reconozca estos codones</li>
+                            <li><strong>Factores de liberación</strong> (RF1 y RF2 en procariotas; eRF1 en eucariotas) reconocen el codón stop</li>
+                            <li>RF3/eRF3 + GTP promueven la liberación</li>
+                            <li>La peptidil transferasa transfiere el polipéptido a una molécula de agua (hidrólisis) en lugar de a un aminoácido</li>
+                            <li>El polipéptido completo se libera</li>
+                            <li>Factores de reciclaje (RRF, EF-G) disocian el ribosoma en subunidades</li>
+                            <li>ARNm y ARNt descargado se liberan</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>⚡ Polirribosomas (Polisomas)</h3>
+                <ul>
+                    <li>Múltiples ribosomas traducen el mismo ARNm simultáneamente</li>
+                    <li>Cada ribosoma está en una etapa diferente de traducción</li>
+                    <li>Permite síntesis rápida de muchas copias de una proteína</li>
+                    <li>En electronmicroscopía se ven como "cuentas en un collar"</li>
+                    <li>Los ribosomas cercanos al extremo 5' tienen cadenas polipeptídicas más cortas</li>
+                    <li>Los ribosomas cercanos al extremo 3' tienen cadenas más largas (casi completas)</li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3>🔧 Modificaciones Post-traduccionales</h3>
+                <p>Después de la síntesis, las proteínas sufren modificaciones:</p>
+                <ul>
+                    <li><strong>Plegamiento:</strong> Adquisición de estructura tridimensional funcional
+                        <ul>
+                            <li>Asistido por <span class="highlight">chaperonas</span> (Hsp70, Hsp60, chaperoninas)</li>
+                            <li>Plegamiento co-traduccional (mientras se sintetiza)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Procesamiento proteolítico:</strong>
+                        <ul>
+                            <li>Remoción de Met inicial</li>
+                            <li>Escisión de péptido señal</li>
+                            <li>Activación de zimógenos (ej: tripsinógeno → tripsina)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Modificaciones químicas:</strong>
+                        <ul>
+                            <li>Fosforilación (Ser, Thr, Tyr)</li>
+                            <li>Glicosilación (N- y O-glicosilación)</li>
+                            <li>Acetilación (Lys)</li>
+                            <li>Metilación (Lys, Arg)</li>
+                            <li>Ubiquitinación (marcado para degradación)</li>
+                            <li>Formación de puentes disulfuro (Cys-Cys)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Ensamblaje:</strong> Formación de complejos multiproteicos</li>
+                </ul>
+            </div>
+
+            <div class="summary-box">
+                <h3>📝 Resumen: Traducción</h3>
+                <ul class="summary-points">
+                    <li>La traducción es la síntesis de proteínas en ribosomas usando ARNm como molde y ARNt como adaptadores</li>
+                    <li>El código genético es triplete, degenerado, no ambiguo, casi universal y sin superposición</li>
+                    <li>ARNt cargado por aminoacil-ARNt sintetasa; anticodón reconoce codón (wobble en 3ª base)</li>
+                    <li>Ribosoma tiene sitios A (entrada), P (peptidil), E (salida); la peptidil transferasa es una ribozima (rRNA)</li>
+                    <li>Iniciación: Procariotas (Shine-Dalgarno, fMet); Eucariotas (cap 5', escaneo, Met)</li>
+                    <li>Elongación: Entrada ARNt (EF-Tu/eEF1α + GTP), enlace peptídico, translocación (EF-G/eEF2 + GTP)</li>
+                    <li>Terminación: Codones stop (UAA, UAG, UGA) reconocidos por factores de liberación</li>
+                    <li>Polirribosomas permiten síntesis simultánea de múltiples copias</li>
+                    <li>Proteínas sufren plegamiento (chaperonas) y modificaciones post-traduccionales</li>
+                </ul>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="quiz-container">
+                <h3>📝 Cuestionario: Traducción</h3>
+                
+                <div class="quiz-question">
+                    <p><strong>1. ¿Cuántos codones diferentes existen en el código genético?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) 20</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">B) 64</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) 61</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) 3</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>2. ¿Qué enzima carga el aminoácido en el ARNt?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) ARN polimerasa</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">B) Peptidil transferasa</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">C) Aminoacil-ARNt sintetasa</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) Helicasa</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>3. ¿Qué codones señalan terminación?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">A) UAA, UAG, UGA</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">B) AUG</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) UUU, UUC</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) GGU, GGC, GGA, GGG</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gene Regulation Section -->
+        <section class="section-card" id="regulacion">
+            <h2 class="section-title">
+                <span class="section-icon">🎛️</span>
+                Regulación de la Expresión Génica y Epigenética
+            </h2>
+
+            <div class="concept-map">
+                <h3>🗺️ Mapa Conceptual: Regulación Génica</h3>
+                <div class="map-container">
+                    <div class="map-node">
+                        <h4>Niveles de Regulación</h4>
+                        <p>Transcripcional, post-transcripcional, traduccional, post-traduccional</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Factores de Transcripción</h4>
+                        <p>Activadores y represores que se unen a secuencias reguladoras</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Epigenética</h4>
+                        <p>Modificaciones heredables que no cambian secuencia de ADN</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Metilación del ADN</h4>
+                        <p>Metilación de citosinas en islas CpG → silenciamiento</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Modificación de Histonas</h4>
+                        <p>Acetilación (activa), metilación (activa o represiva)</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>ARN no codificantes</h4>
+                        <p>microARN, ARNi que regulan expresión post-transcripcionalmente</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>🎚️ Niveles de Regulación de la Expresión Génica</h3>
+                
+                <h4>1. Nivel Transcripcional (el más común)</h4>
+                <ul>
+                    <li><strong>Control de acceso al ADN:</strong>
+                        <ul>
+                            <li>Cromatina condensada (heterocromatina) → inaccesible</li>
+                            <li>Cromatina abierta (eucromatina) → accesible</li>
+                            <li>Remodelación de cromatina por complejos ATP-dependientes</li>
+                        </ul>
+                    </li>
+                    <li><strong>Factores de transcripción:</strong>
+                        <ul>
+                            <li><span class="highlight">Generales:</span> Necesarios para transcripción basal (TFIID, TFIIB, etc.)</li>
+                            <li><span class="highlight">Específicos:</span> Activadores o represores que regulan genes particulares</li>
+                            <li>Se unen a <span class="highlight">enhancers</span> (potenciadores) o <span class="highlight">silencers</span> (silenciadores)</li>
+                            <li>Pueden estar a miles de pb del promotor (looping del ADN)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Elementos reguladores:</strong>
+                        <ul>
+                            <li>Promotor proximal (~-200 pb)</li>
+                            <li>Enhancers/silencers (distancia variable)</li>
+                            <li>Elementos de respuesta a hormonas, estrés, etc.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>2. Nivel Post-transcripcional</h4>
+                <ul>
+                    <li><strong>Splicing alternativo:</strong> Diferentes combinaciones de exones → diferentes proteínas</li>
+                    <li><strong>Estabilidad del ARNm:</strong>
+                        <ul>
+                            <li>Vida media variable (minutos a días)</li>
+                            <li>Secuencias en 3' UTR que afectan estabilidad</li>
+                            <li>microARN que promueven degradación o inhiben traducción</li>
+                        </ul>
+                    </li>
+                    <li><strong>Edición de ARN:</strong> Cambios en secuencia (ej: A→I)</li>
+                    <li><strong>Localización subcelular:</strong> ARNm transportados a regiones específicas</li>
+                </ul>
+
+                <h4>3. Nivel Traduccional</h4>
+                <ul>
+                    <li><strong>Control de iniciación:</strong>
+                        <ul>
+                            <li>Fosforilación de factores de iniciación (eIF2, eIF4E)</li>
+                            <li>Proteínas que se unen a 5' o 3' UTR bloqueando ribosoma</li>
+                        </ul>
+                    </li>
+                    <li><strong>Regulación por microARN:</strong>
+                        <ul>
+                            <li>ARN pequeños (~22 nt) que se aparean con ARNm</li>
+                            <li>Apareamiento perfecto → degradación del ARNm</li>
+                            <li>Apareamiento imperfecto → bloqueo de traducción</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>4. Nivel Post-traduccional</h4>
+                <ul>
+                    <li><strong>Modificaciones:</strong> Fosforilación, ubiquitinación, etc. que activan/inactivan</li>
+                    <li><strong>Degradación:</strong> Proteosoma (ubiquitina-proteosoma) y lisosoma (autofagia)</li>
+                    <li><strong>Localización:</strong> Transporte a compartimentos específicos</li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3>🧬 Epigenética: Regulación sin Cambiar el ADN</h3>
+                <p><strong>Definición:</strong> Cambios heredables en la expresión génica que no involucran alteraciones en la secuencia de nucleótidos del ADN.</p>
+                
+                <h4>Mecanismos Epigenéticos:</h4>
+                
+                <h4>1. Metilación del ADN</h4>
+                <ul>
+                    <li><strong>Mecanismo:</strong> Adición de grupo metilo (-CH₃) a citosinas en dinucleótidos CpG</li>
+                    <li><strong>Enzimas:</strong> ADN metiltransferasas (DNMT1, DNMT3a, DNMT3b)</li>
+                    <li><strong>Islas CpG:</strong> Regiones ricas en CpG (~60% de promotores de genes humanos)</li>
+                    <li><strong>Efecto:</strong>
+                        <ul>
+                            <li>Metilación → silenciamiento génico</li>
+                            <li>Bloqueo de unión de factores de transcripción</li>
+                            <li>Reclutamiento de proteínas que compactan cromatina (MeCP2, MBD)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Funciones:</strong>
+                        <ul>
+                            <li>Silenciamiento de genes en desarrollo</li>
+                            <li>Inactivación del cromosoma X en hembras</li>
+                            <li>Impronta genómica (expresión dependiente del origen parental)</li>
+                            <li>Silenciamiento de transposones</li>
+                        </ul>
+                    </li>
+                    <li><strong>Herencia:</strong> DNMT1 reconoce hemimetilación post-replicación y metila la hebra nueva</li>
+                </ul>
+
+                <h4>2. Modificación de Histonas</h4>
+                <ul>
+                    <li><strong>Colas de histonas:</strong> Extremos N-terminales que salen del nucleosoma</li>
+                    <li><strong>Tipos de modificaciones:</strong>
+                        <ul>
+                            <li><span class="highlight">Acetilación (Lys):</span> Neutraliza carga positiva → debilita interacción con ADN → cromatina abierta → ACTIVACIÓN
+                                <ul>
+                                    <li>Enzimas: HATs (histona acetiltransferasas) añaden; HDACs (histona deacetilasas) remueven</li>
+                                </ul>
+                            </li>
+                            <li><span class="highlight">Metilación (Lys, Arg):</span> Depende de la posición:
+                                <ul>
+                                    <li>H3K4me3 → ACTIVACIÓN</li>
+                                    <li>H3K9me3, H3K27me3 → REPRESIÓN</li>
+                                    <li>H3K36me3 → elongación</li>
+                                    <li>Enzimas: HMTs (metiltransferasas), HDMs (desmetilasas)</li>
+                                </ul>
+                            </li>
+                            <li><span class="highlight">Fosforilación (Ser, Thr):</span> Condensación cromosómica en mitosis</li>
+                            <li><span class="highlight">Ubiquitinación:</span> Regulación de transcripción</li>
+                        </ul>
+                    </li>
+                    <li><strong>Código de histonas:</strong> Combinación específica de modificaciones determina estado de cromatina</li>
+                    <li><strong>Lectores:</strong> Proteínas con dominios especializados (bromo, chromo, tudor) que reconocen modificaciones</li>
+                </ul>
+
+                <h4>3. Remodelación de Cromatina</h4>
+                <ul>
+                    <li>Complejos ATP-dependientes (SWI/SNF, ISWI, CHD, INO80)</li>
+                    <li>Deslizan, expulsan o reestructuran nucleosomas</li>
+                    <li>Permiten acceso de maquinaria transcripcional</li>
+                </ul>
+
+                <h4>4. ARN no codificantes</h4>
+                <ul>
+                    <li><span class="highlight">microARN (miARN):</span> ~22 nt, regulan expresión post-transcripcionalmente</li>
+                    <li><span class="highlight">ARN de interferencia (ARNi):</span> Silenciamiento génico</li>
+                    <li><span class="highlight">ARN largo no codificante (lncRNA):</span> >200 nt, regulación epigenética (ej: Xist en inactivación de X)</li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3>🔬 Ejemplos de Regulación Epigenética</h3>
+                
+                <h4>1. Inactivación del Cromosoma X</h4>
+                <ul>
+                    <li>Hembras de mamíferos (XX) inactivan un cromosoma X para igualar dosis con machos (XY)</li>
+                    <li><span class="highlight">ARN Xist</span> (lncRNA) recubre el X que será inactivado</li>
+                    <li>Recluta complejos de modificación de histonas (H3K27me3) y metilación de ADN</li>
+                    <li>Formación de <span class="highlight">cuerpo de Barr</span> (heterocromatina facultativa)</li>
+                    <li>Inactivación aleatoria en embrión temprano → mosaicismo</li>
+                    <li>Ejemplo: Gatas calicó (colores diferentes por X inactivado diferente)</li>
+                </ul>
+
+                <h4>2. Impronta Genómica</h4>
+                <ul>
+                    <li>Ciertos genes se expresan solo del alelo materno o paterno</li>
+                    <li>Metilación diferencial según origen parental</li>
+                    <li>Ejemplos:
+                        <ul>
+                            <li>IGF2 (factor de crecimiento): Solo paterno expresado</li>
+                            <li>H19 (ARN no codificante): Solo materno expresado</li>
+                        </ul>
+                    </li>
+                    <li>Alteraciones causan síndromes:
+                        <ul>
+                            <li>Síndrome de Prader-Willi: Deleción paterna 15q11-q13</li>
+                            <li>Síndrome de Angelman: Deleción materna 15q11-q13</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>3. Efectos Ambientales</h4>
+                <ul>
+                    <li><strong>Dieta:</strong> Deficiencia de folato → altera metilación</li>
+                    <li><strong>Estrés:</strong> Modifica patrones de metilación en genes de respuesta al estrés</li>
+                    <li><strong>Tóxicos:</strong> Humo de cigarro, metales pesados alteran epigenoma</li>
+                    <li><strong>Ejemplo ratones Agouti:</strong>
+                        <ul>
+                            <li>Madres con dieta rica en metil-donores (folato, B12) → crías marrones y delgadas (gen Agouti metilado/silenciado)</li>
+                            <li>Madres sin suplementos → crías amarillas y obesas (gen Agouti activo)</li>
+                        </ul>
+                    </li>
+                    <li>Herencia transgeneracional de marcas epigenéticas (evidencia en estudio)</li>
+                </ul>
+            </div>
+
+            <div class="summary-box">
+                <h3>📝 Resumen: Regulación Génica y Epigenética</h3>
+                <ul class="summary-points">
+                    <li>La expresión génica se regula en múltiples niveles: transcripcional, post-transcripcional, traduccional y post-traduccional</li>
+                    <li>Factores de transcripción (activadores/represores) se unen a enhancers/silencers regulando iniciación</li>
+                    <li>Epigenética: modificaciones heredables sin cambiar secuencia de ADN</li>
+                    <li>Metilación de citosinas en islas CpG → silenciamiento génico</li>
+                    <li>Modificación de histonas: acetilación (activa), metilación (depende de posición: H3K4me3 activa, H3K27me3 reprime)</li>
+                    <li>El "código de histonas" combina modificaciones que determinan estado de cromatina</li>
+                    <li>Inactivación del cromosoma X mediada por ARN Xist y modificaciones epigenéticas</li>
+                    <li>Impronta genómica: expresión dependiente del origen parental (metilación diferencial)</li>
+                    <li>Factores ambientales (dieta, estrés, tóxicos) pueden alterar el epigenoma</li>
+                    <li>microARN regulan expresión post-transcripcionalmente (degradación o bloqueo de traducción)</li>
+                </ul>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="quiz-container">
+                <h3>📝 Cuestionario: Regulación Génica</h3>
+                
+                <div class="quiz-question">
+                    <p><strong>1. ¿Qué efecto tiene la metilación de ADN en promotores?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) Activación génica</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">B) Silenciamiento génico</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) No tiene efecto</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) Aumenta traducción</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>2. ¿Qué modificación de histonas se asocia con activación génica?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">A) Acetilación</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">B) Deacetilación</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) H3K9me3</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) H3K27me3</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>3. ¿Qué ARN no codificante media la inactivación del cromosoma X?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) microARN</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">B) ARNt</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">C) Xist</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) ARNr</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mendel Section -->
+        <section class="section-card" id="mendel">
+            <h2 class="section-title">
+                <span class="section-icon">🌱</span>
+                Leyes de la Herencia y Experimentos de Mendel
+            </h2>
+
+            <div class="concept-map">
+                <h3>🗺️ Mapa Conceptual: Genética Mendeliana</h3>
+                <div class="map-container">
+                    <div class="map-node">
+                        <h4>Gregor Mendel</h4>
+                        <p>Monje agustino, padre de la genética, experimentos con Pisum sativum (1856-1863)</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Primera Ley</h4>
+                        <p>Segregación: Alelos se separan en gametos (meiosis)</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Segunda Ley</h4>
+                        <p>Distribución independiente: Genes diferentes se heredan independientemente</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Dominancia</h4>
+                        <p>Completa, incompleta, codominancia</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Cruce de Prueba</h4>
+                        <p>Determinar genotipo cruzando con homocigoto recesivo</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Proporciones</h4>
+                        <p>Monohíbrido: 3:1; Dihíbrido: 9:3:3:1</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>🔬 Los Experimentos de Mendel</h3>
+                
+                <h4>Material Experimental:</h4>
+                <ul>
+                    <li><strong>Organismo:</strong> <em>Pisum sativum</em> (guisante/arveja)</li>
+                    <li><strong>Razones de elección:</strong>
+                        <ul>
+                            <li>Fácil cultivo y ciclo corto</li>
+                            <li>Caracteres discretos (no intermedios)</li>
+                            <li>Autofecundación natural (líneas puras)</li>
+                            <li>Fecundación cruzada controlada posible</li>
+                            <li>Mucha descendencia por cruce</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>Caracteres Estudiados (7 pares):</h4>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Carácter</th>
+                            <th>Dominante</th>
+                            <th>Recesivo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Forma de semilla</td>
+                            <td>Redonda (R)</td>
+                            <td>Arrugada (r)</td>
+                        </tr>
+                        <tr>
+                            <td>Color de semilla</td>
+                            <td>Amarilla (Y)</td>
+                            <td>Verde (y)</td>
+                        </tr>
+                        <tr>
+                            <td>Color de flor</td>
+                            <td>Púrpura (P)</td>
+                            <td>Blanca (p)</td>
+                        </tr>
+                        <tr>
+                            <td>Forma de vaina</td>
+                            <td>Lisa</td>
+                            <td>Arrugada</td>
+                        </tr>
+                        <tr>
+                            <td>Color de vaina</td>
+                            <td>Verde</td>
+                            <td>Amarilla</td>
+                        </tr>
+                        <tr>
+                            <td>Posición de flor</td>
+                            <td>Axial</td>
+                            <td>Terminal</td>
+                        </tr>
+                        <tr>
+                            <td>Longitud de tallo</td>
+                            <td>Largo</td>
+                            <td>Corto</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-box">
+                <h3>📊 Primera Ley de Mendel: Ley de la Segregación</h3>
+                
+                <h4>Experimento Monohíbrido:</h4>
+                <ul>
+                    <li><strong>Generación Parental (P):</strong>
+                        <ul>
+                            <li>Cruzó líneas puras: Flores púrpura (PP) × Flores blancas (pp)</li>
+                            <li>Homocigotos dominantes × homocigotos recesivos</li>
+                        </ul>
+                    </li>
+                    <li><strong>Primera Generación Filial (F₁):</strong>
+                        <ul>
+                            <li>Todos los descendientes: Flores púrpura</li>
+                            <li>Genotipo: Todos heterocigotos (Pp)</li>
+                            <li>Fenotipo: 100% púrpura (dominante)</li>
+                            <li>El carácter recesivo "desaparece" pero no se pierde</li>
+                        </ul>
+                    </li>
+                    <li><strong>Autofecundación de F₁:</strong> Pp × Pp</li>
+                    <li><strong>Segunda Generación Filial (F₂):</strong>
+                        <ul>
+                            <li>Fenotipo: 3 púrpura : 1 blanca (75% : 25%)</li>
+                            <li>Genotipo: 1 PP : 2 Pp : 1 pp (25% : 50% : 25%)</li>
+                            <li>El carácter recesivo reaparece</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>Enunciado de la Primera Ley:</h4>
+                <p><span class="highlight">"Los dos alelos de un gen se segregan (separan) durante la formación de gametos, de modo que cada gameto recibe solo uno de los dos alelos."</span></p>
+                
+                <h4>Base Citológica:</h4>
+                <ul>
+                    <li>Corresponde a la separación de cromosomas homólogos en Anafase I de meiosis</li>
+                    <li>Cada gameto es haploide (n) y recibe un solo alelo</li>
+                </ul>
+
+                <h4>Cuadro de Punnett - Cruce Monohíbrido:</h4>
+                <div style="background: white; padding: 1.5rem; border-radius: 10px; margin: 1rem 0; text-align: center;">
+                    <p><strong>Cruce F₁ × F₁: Pp × Pp</strong></p>
+                    <table style="margin: 1rem auto; border-collapse: collapse;">
+                        <tr>
+                            <th style="border: 2px solid #2a5298; padding: 10px;"></th>
+                            <th style="border: 2px solid #2a5298; padding: 10px;">P</th>
+                            <th style="border: 2px solid #2a5298; padding: 10px;">p</th>
+                        </tr>
+                        <tr>
+                            <th style="border: 2px solid #2a5298; padding: 10px;">P</th>
+                            <td style="border: 2px solid #2a5298; padding: 10px; background: #d4edda;">PP<br>Púrpura</td>
+                            <td style="border: 2px solid #2a5298; padding: 10px; background: #fff3cd;">Pp<br>Púrpura</td>
+                        </tr>
+                        <tr>
+                            <th style="border: 2px solid #2a5298; padding: 10px;">p</th>
+                            <td style="border: 2px solid #2a5298; padding: 10px; background: #fff3cd;">Pp<br>Púrpura</td>
+                            <td style="border: 2px solid #2a5298; padding: 10px; background: #f8d7da;">pp<br>Blanca</td>
+                        </tr>
+                    </table>
+                    <p><strong>Proporción fenotípica:</strong> 3 púrpura : 1 blanca</p>
+                    <p><strong>Proporción genotípica:</strong> 1 PP : 2 Pp : 1 pp</p>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>📊 Segunda Ley de Mendel: Ley de la Distribución Independiente</h3>
+                
+                <h4>Experimento Dihíbrido:</h4>
+                <ul>
+                    <li><strong>Cruce:</strong> Semilla amarilla-lisa (YYRR) × Semilla verde-arrugada (yyrr)</li>
+                    <li><strong>F₁:</strong> Todos amarillo-liso (YyRr) - heterocigotos para ambos caracteres</li>
+                    <li><strong>Autofecundación F₁:</strong> YyRr × YyRr</li>
+                    <li><strong>F₂ - Resultados:</strong>
+                        <ul>
+                            <li>Amarillo-liso: 9/16</li>
+                            <li>Amarillo-arrugado: 3/16</li>
+                            <li>Verde-liso: 3/16</li>
+                            <li>Verde-arrugado: 1/16</li>
+                            <li><strong>Proporción:</strong> 9:3:3:1</li>
+                        </ul>
+                    </li>
+                    <li><strong>Aparecen combinaciones nuevas:</strong> Amarillo-arrugado y verde-liso (recombinantes)</li>
+                </ul>
+
+                <h4>Enunciado de la Segunda Ley:</h4>
+                <p><span class="highlight">"Los alelos de genes diferentes se distribuyen independientemente unos de otros durante la formación de gametos."</span></p>
+                
+                <h4>Base Citológica:</h4>
+                <ul>
+                    <li>Corresponde a la orientación aleatoria de pares de homólogos en Metafase I de meiosis</li>
+                    <li>Cada par de homólogos se alinea independientemente de otros pares</li>
+                </ul>
+
+                <h4>Excepción:</h4>
+                <ul>
+                    <li>Genes ligados (en el mismo cromosoma cerca) NO se distribuyen independientemente</li>
+                    <li>Tienden a heredarse juntos (excepto si hay crossing over entre ellos)</li>
+                </ul>
+
+                <h4>Cálculo de Gametos en Dihíbrido:</h4>
+                <ul>
+                    <li>YyRr puede producir: YR, Yr, yR, yr (4 tipos en proporción 1:1:1:1)</li>
+                    <li>Fórmula: 2ⁿ donde n = número de genes heterocigotos</li>
+                    <li>En YyRr: 2² = 4 tipos de gametos</li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3> Cruce de Prueba (Test Cross)</h3>
+                <p>Permite determinar si un individuo con fenotipo dominante es homocigoto (PP) o heterocigoto (Pp).</p>
+                
+                <h4>Procedimiento:</h4>
+                <ul>
+                    <li>Cruzar el individuo de genotipo desconocido con un <span class="highlight">homocigoto recesivo</span> (pp)</li>
+                    <li>Analizar la descendencia:</li>
+                </ul>
+
+                <h4>Resultados Posibles:</h4>
+                <div style="background: white; padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                    <p><strong>Caso 1: Si el desconocido es PP (homocigoto dominante)</strong></p>
+                    <p>PP × pp → Todos Pp (100% fenotipo dominante)</p>
+                    <p><strong>Conclusión:</strong> Si TODA la descendencia muestra fenotipo dominante → el padre es PP</p>
+                </div>
+
+                <div style="background: white; padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                    <p><strong>Caso 2: Si el desconocido es Pp (heterocigoto)</strong></p>
+                    <p>Pp × pp → 50% Pp (dominante) : 50% pp (recesivo)</p>
+                    <p><strong>Conclusión:</strong> Si APARECE al menos un descendiente con fenotipo recesivo → el padre es Pp</p>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>🎨 Patrones de Herencia No Mendelianos</h3>
+                
+                <h4>1. Dominancia Incompleta</h4>
+                <ul>
+                    <li>El heterocigoto muestra fenotipo intermedio entre los dos homocigotos</li>
+                    <li><strong>Ejemplo:</strong> <em>Mirabilis jalapa</em> (dondiego de noche)</li>
+                    <ul>
+                        <li>CR CR = Flores rojas</li>
+                        <li>CB CB = Flores blancas</li>
+                        <li>CR CB = Flores rosadas (intermedio)</li>
+                    </ul>
+                    <li><strong>Cruce:</strong> Roja × Blanca → F₁: 100% rosadas</li>
+                    <li><strong>F₂:</strong> 1 roja : 2 rosadas : 1 blanca (proporción 1:2:1)</li>
+                    <li>La proporción fenotípica = proporción genotípica</li>
+                </ul>
+
+                <h4>2. Codominancia</h4>
+                <ul>
+                    <li>Ambos alelos se expresan completamente en el heterocigoto</li>
+                    <li><strong>Ejemplo 1:</strong> Grupo sanguíneo ABO</li>
+                    <ul>
+                        <li>I^A I^A o I^A i = Tipo A</li>
+                        <li>I^B I^B o I^B i = Tipo B</li>
+                        <li>I^A I^B = Tipo AB (ambos antígenos presentes - codominancia)</li>
+                        <li>ii = Tipo O</li>
+                    </ul>
+                    <li><strong>Ejemplo 2:</strong> Flor de achira</li>
+                    <ul>
+                        <li>CR CR = Roja</li>
+                        <li>CA CA = Amarilla</li>
+                        <li>CR CA = Roja con manchas amarillas (ambos colores visibles)</li>
+                    </ul>
+                </ul>
+
+                <h4>3. Alelos Múltiples</h4>
+                <ul>
+                    <li>Más de dos alelos para un gen en la población</li>
+                    <li>Cada individuo solo tiene 2 alelos (diploide)</li>
+                    <li><strong>Ejemplo:</strong> Grupo ABO (3 alelos: I^A, I^B, i)</li>
+                </ul>
+
+                <h4>4. Herencia Poligénica</h4>
+                <ul>
+                    <li>Carácter controlado por múltiples genes</li>
+                    <li>Variación continua (no discreta)</li>
+                    <li><strong>Ejemplos:</strong> Altura, color de piel, peso</li>
+                    <li>Distribución normal (campana de Gauss)</li>
+                </ul>
+
+                <h4>5. Pleiotropía</h4>
+                <ul>
+                    <li>Un gen afecta múltiples caracteres fenotípicos</li>
+                    <li><strong>Ejemplo:</strong> Fenilcetonuria (PKU)</li>
+                    <ul>
+                        <li>Mutación en gen de fenilalanina hidroxilasa</li>
+                        <li>Causa: retraso mental, piel clara, olor corporal característico</li>
+                    </ul>
+                </ul>
+            </div>
+
+            <div class="summary-box">
+                <h3>📝 Resumen: Leyes de Mendel</h3>
+                <ul class="summary-points">
+                    <li>Mendel trabajó con guisantes (Pisum sativum) estudiando 7 caracteres con dos formas alternativas cada uno</li>
+                    <li>Primera Ley (Segregación): Los alelos de un gen se separan en la formación de gametos; cada gameto recibe un solo alelo</li>
+                    <li>Cruce monohíbrido F₂: Proporción fenotípica 3:1 (dominante:recesivo); genotípica 1:2:1 (homocigoto dom:het:homocigoto rec)</li>
+                    <li>Segunda Ley (Distribución Independiente): Genes diferentes se heredan independientemente (orientación aleatoria en metafase I)</li>
+                    <li>Cruce dihíbrido F₂: Proporción 9:3:3:1 (dom-dom : dom-rec : rec-dom : rec-rec)</li>
+                    <li>Cruce de prueba: Cruzar con homocigoto recesivo para determinar genotipo de fenotipo dominante</li>
+                    <li>Dominancia incompleta: Heterocigoto con fenotipo intermedio (ej: flor rosada de roja × blanca)</li>
+                    <li>Codominancia: Ambos alelos se expresan completamente (ej: grupo AB, flor con ambos colores)</li>
+                    <li>Alelos múltiples: Más de dos alelos en población (ej: ABO)</li>
+                    <li>Las leyes de Mendel aplican a genes en cromosomas diferentes o muy separados; genes ligados son excepción</li>
+                </ul>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="quiz-container">
+                <h3>📝 Cuestionario: Genética Mendeliana</h3>
+                
+                <div class="quiz-question">
+                    <p><strong>1. ¿Cuál es la proporción fenotípica en F₂ de un cruce monohíbrido?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) 1:2:1</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">B) 3:1</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) 9:3:3:1</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) 1:1</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>2. En dominancia incompleta, ¿qué fenotipo tiene el heterocigoto?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) Igual al dominante</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">B) Igual al recesivo</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">C) Intermedio entre ambos</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) Ambos fenotipos</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>3. ¿Qué proporción se espera en un cruce dihíbrido F₂?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) 3:1</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">B) 9:3:3:1</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) 1:2:1</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) 1:1:1:1</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <p><strong>4. Para determinar el genotipo de un organismo con fenotipo dominante, se usa:</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) Autofecundación</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">B) Cruce de prueba con homocigoto recesivo</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) Cruce con homocigoto dominante</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">D) Análisis de ADN</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Glossary Section -->
+        <section class="section-card" id="glosario">
+            <h2 class="section-title">
+                <span class="section-icon">📖</span>
+                Glosario de Términos
+            </h2>
+
+            <div class="glossary-grid">
+                <div class="glossary-item">
+                    <div class="glossary-term">ADN (Ácido Desoxirribonucleico)</div>
+                    <p>Molécula que almacena la información genética en forma de secuencia de nucleótidos. Estructura de doble hélice antiparalela.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">ARN (Ácido Ribonucleico)</div>
+                    <p>Ácido nucleico de cadena simple que participa en la expresión génica. Tipos: ARNm (mensajero), ARNt (transferencia), ARNr (ribosomal).</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Alelo</div>
+                    <p>Cada una de las formas alternativas de un gen que puede existir en un locus específico.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Anticodón</div>
+                    <p>Triplete de nucleótidos en ARNt complementario a un codón de ARNm.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Centrómero</div>
+                    <p>Región del cromosoma donde se unen las cromátides hermanas y se une el huso mitótico.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Codón</div>
+                    <p>Secuencia de tres nucleótidos en ARNm que especifica un aminoácido o señal de terminación.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Cromátide</div>
+                    <p>Cada una de las dos copias idénticas de un cromosoma replicado, unidas por el centrómero.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Cromosoma</div>
+                    <p>Estructura de ADN y proteínas que contiene los genes. Los humanos tienen 46 cromosomas (23 pares).</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Crossing Over</div>
+                    <p>Intercambio de segmentos entre cromátides no hermanas de cromosomas homólogos durante profase I de meiosis.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Diploide (2n)</div>
+                    <p>Célula que tiene dos juegos completos de cromosomas, uno de cada progenitor.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Epigenética</div>
+                    <p>Estudio de cambios heredables en la expresión génica que no involucran alteraciones en la secuencia de ADN.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Exón</div>
+                    <p>Secuencia codificante de un gen que permanece en el ARNm maduro después del splicing.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Fenotipo</div>
+                    <p>Características observables de un organismo resultantes de la interacción entre genotipo y ambiente.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Fragmentos de Okazaki</div>
+                    <p>Segmentos cortos de ADN sintetizados discontinuamente en la hebra retrasada durante la replicación.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Gen</div>
+                    <p>Unidad de herencia; secuencia de ADN que codifica una proteína o ARN funcional.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Genotipo</div>
+                    <p>Constitución genética de un organismo; conjunto de alelos que posee.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Haploide (n)</div>
+                    <p>Célula que tiene un solo juego de cromosomas (gametos).</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Heterocigoto</div>
+                    <p>Individuo con dos alelos diferentes para un gen (ej: Aa).</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Homocigoto</div>
+                    <p>Individuo con dos alelos iguales para un gen (AA o aa).</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Intrón</div>
+                    <p>Secuencia no codificante de un gen que es eliminada del pre-ARNm durante el splicing.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Meiosis</div>
+                    <p>División celular reduccional que produce gametos haploides a partir de células diploides. Consta de dos divisiones sucesivas.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Metilación del ADN</div>
+                    <p>Adición de grupo metilo a citosinas, generalmente asociada con silenciamiento génico.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Mitosis</div>
+                    <p>División celular que produce dos células hijas genéticamente idénticas a la célula madre.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Nucleosoma</div>
+                    <p>Unidad básica de empaquetamiento de cromatina: ~147 pb de ADN enrolladas alrededor de un octámero de histonas.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Promotor</div>
+                    <p>Región de ADN donde se une la ARN polimerasa para iniciar la transcripción.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Replicación</div>
+                    <p>Proceso de duplicación del ADN antes de la división celular. Modelo semiconservativo.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Ribosoma</div>
+                    <p>Complejo de ARNr y proteínas donde ocurre la traducción. Tiene subunidades mayor y menor.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Splicing</div>
+                    <p>Proceso de eliminación de intrones y unión de exones en el pre-ARNm eucariota.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Telómero</div>
+                    <p>Extremo del cromosoma con secuencias repetitivas que protegen contra degradación y fusión.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Traducción</div>
+                    <p>Síntesis de proteínas en ribosomas usando ARNm como molde y ARNt como adaptadores.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Transcripción</div>
+                    <p>Síntesis de ARN a partir de un molde de ADN, catalizada por ARN polimerasa.</p>
+                </div>
+                
+                <div class="glossary-item">
+                    <div class="glossary-term">Quiasma</div>
+                    <p>Punto de contacto visible entre cromátides no hermanas de homólogos donde ocurrió crossing over.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Resources Section -->
+        <section class="section-card">
+            <h2 class="section-title">
+                <span class="section-icon">🎥</span>
+                Recursos Multimedia y Animaciones
+            </h2>
+
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-placeholder">🎬</div>
+                    <div class="video-info">
+                        <h4>Estructura del ADN</h4>
+                        <p>Animación 3D de la doble hélice, apareamiento de bases y empaquetamiento en cromatina</p>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-placeholder">🎬</div>
+                    <div class="video-info">
+                        <h4>Replicación del ADN</h4>
+                        <p>Proceso completo: helicasa, horquilla, hebra adelantada y retrasada, fragmentos de Okazaki</p>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-placeholder">🎬</div>
+                    <div class="video-info">
+                        <h4>Mitosis y Meiosis</h4>
+                        <p>Comparación de fases, diferencias clave y formación de gametos</p>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-placeholder">🎬</div>
+                    <div class="video-info">
+                        <h4>Transcripción</h4>
+                        <p>Iniciación, elongación, terminación y procesamiento del ARN en eucariotas</p>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-placeholder">🎬</div>
+                    <div class="video-info">
+                        <h4>Traducción</h4>
+                        <p>Ribosoma, ARNt, código genético, iniciación, elongación y terminación</p>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-placeholder">🎬</div>
+                    <div class="video-info">
+                        <h4>Regulación Epigenética</h4>
+                        <p>Metilación de ADN, modificación de histonas y control de expresión génica</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Podcast Section -->
+        <section class="section-card">
+            <h2 class="section-title">
+                <span class="section-icon">🎙️</span>
+                Podcast Educativos
+            </h2>
+
+            <div class="podcast-grid">
+                <div class="podcast-card">
+                    <div class="podcast-icon">🎧</div>
+                    <h4>El ADN: La Molécula de la Vida</h4>
+                    <p>Descubrimiento histórico, estructura y función del material genético</p>
+                    <div class="podcast-player">
+                        <p>⏱️ Duración: 25 min</p>
+                        <button class="btn">▶ Reproducir</button>
+                    </div>
+                </div>
+
+                <div class="podcast-card">
+                    <div class="podcast-icon">🎧</div>
+                    <h4>De Gen a Proteína</h4>
+                    <p>Flujo de información genética: transcripción y traducción paso a paso</p>
+                    <div class="podcast-player">
+                        <p>⏱️ Duración: 35 min</p>
+                        <button class="btn">▶ Reproducir</button>
+                    </div>
+                </div>
+
+                <div class="podcast-card">
+                    <div class="podcast-icon">🎧</div>
+                    <h4>Meiosis y Variabilidad</h4>
+                    <p>Cómo la meiosis genera diversidad genética y su importancia evolutiva</p>
+                    <div class="podcast-player">
+                        <p>⏱️ Duración: 30 min</p>
+                        <button class="btn">▶ Reproducir</button>
+                    </div>
+                </div>
+
+                <div class="podcast-card">
+                    <div class="podcast-icon">🎧</div>
+                    <h4>Epigenética: Más Allá del ADN</h4>
+                    <p>Cómo el ambiente modifica la expresión génica sin cambiar el ADN</p>
+                    <div class="podcast-player">
+                        <p>⏱️ Duración: 28 min</p>
+                        <button class="btn">▶ Reproducir</button>
+                    </div>
+                </div>
+
+                <div class="podcast-card">
+                    <div class="podcast-icon">🎧</div>
+                    <h4>Mendel y las Leyes de Herencia</h4>
+                    <p>Los experimentos revolucionarios del monje que fundó la genética</p>
+                    <div class="podcast-player">
+                        <p>⏱️ Duración: 32 min</p>
+                        <button class="btn">▶ Reproducir</button>
+                    </div>
+                </div>
+
+                <div class="podcast-card">
+                    <div class="podcast-icon">🎧</div>
+                    <h4>Mutaciones y Enfermedades</h4>
+                    <p>Cómo los errores en el ADN causan enfermedades y evolución</p>
+                    <div class="podcast-player">
+                        <p>⏱️ Duración: 27 min</p>
+                        <button class="btn">▶ Reproducir</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 3rem 2rem; text-align: center; margin-top: 4rem;">
+        <div class="container">
+            <h3 style="margin-bottom: 1rem;">🧬 BioGenética Interactiva</h3>
+            <p style="margin-bottom: 2rem;">Recurso educativo para el estudio de la genética molecular y celular</p>
+            <div style="border-top: 1px solid rgba(255,255,255,0.3); padding-top: 2rem;">
+                <p><strong>Referencias Bibliográficas:</strong></p>
+                <p>Alberts et al. Introducción a la Biología Celular (5ª ed., 2020)</p>
+                <p>Urry et al. Campbell Biología (12ª ed., 2024)</p>
+                <p style="margin-top: 1rem; font-size: 0.9rem;">© 2026 - Material educativo de libre uso</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Flashcard Flip Function
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+
+        // Quiz Answer Check Function
+        function checkAnswer(option, isCorrect) {
+            // Remove previous classes
+            const parent = option.parentElement;
+            const options = parent.getElementsByClassName('quiz-option');
+            
+            for (let opt of options) {
+                opt.classList.remove('correct', 'incorrect');
+                opt.style.pointerEvents = 'none';
+            }
+            
+            // Add appropriate class
+            if (isCorrect) {
+                option.classList.add('correct');
+                option.innerHTML += ' ✓ Correcto';
+            } else {
+                option.classList.add('incorrect');
+                option.innerHTML += ' ✗ Incorrecto';
+                
+                // Show correct answer
+                for (let opt of options) {
+                    if (opt.onclick.toString().includes('true')) {
+                        opt.classList.add('correct');
+                    }
+                }
+            }
+        }
+
+        // Q&A Toggle Function
+        function toggleAnswer(element) {
+            const answer = element.nextElementSibling;
+            answer.classList.toggle('show');
+            
+            // Change icon
+            if (answer.classList.contains('show')) {
+                element.innerHTML = element.innerHTML.replace('❓', '️');
+            } else {
+                element.innerHTML = element.innerHTML.replace('❇️', '❓');
+            }
+        }
+
+        // Smooth Scroll for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all section cards
+        document.querySelectorAll('.section-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+            observer.observe(card);
+        });
+
+        // Interactive Concept Map Nodes
+        document.querySelectorAll('.map-node').forEach(node => {
+            node.addEventListener('click', function() {
+                this.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+
+        // Progress Tracker
+        let scrollProgress = 0;
+        window.addEventListener('scroll', () => {
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight - windowHeight;
+            scrollProgress = (window.scrollY / documentHeight) * 100;
+            
+            // You could add a progress bar here if desired
+        });
+
+        // Add interactive hover effects to process steps
+        document.querySelectorAll('.process-step').forEach(step => {
+            step.addEventListener('mouseenter', function() {
+                this.style.background = 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)';
+            });
+            step.addEventListener('mouseleave', function() {
+                this.style.background = 'linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)';
+            });
+        });
+
+        // Console welcome message
+        console.log('%c🧬 Bienvenido a BioGenética Interactiva', 'font-size: 20px; color: #667eea; font-weight: bold;');
+        console.log('%cExplora los fascinantes procesos de la genética molecular', 'font-size: 14px; color: #764ba2;');
+    </script>
+</body>
+</html>
