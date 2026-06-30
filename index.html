@@ -1,1 +1,1548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioGenética Interactiva - Del ADN a la Herencia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 0.8rem;
+            border-radius: 20px;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .hero {
+            margin-top: 60px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .section-title {
+            color: #2a5298;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 4px solid #f5576c;
+            padding-bottom: 0.5rem;
+        }
+
+        .collapsible {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .collapsible-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collapsible-content {
+            display: none;
+            padding: 1.5rem;
+            background: white;
+        }
+
+        .collapsible-content.active {
+            display: block;
+        }
+
+        .content-box {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-left: 6px solid #2a5298;
+        }
+
+        .content-box h3 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+
+        .concept-map {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .map-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .map-node {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #2a5298;
+        }
+
+        .map-node h4 {
+            color: #2a5298;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-info {
+            padding: 1.5rem;
+        }
+
+        .quiz-container {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .quiz-question {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .quiz-option {
+            padding: 1rem;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            background: #e9ecef;
+            border-color: #2a5298;
+        }
+
+        .quiz-option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .quiz-option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 3px solid #2a5298;
+        }
+
+        .summary-points {
+            list-style: none;
+        }
+
+        .summary-points li {
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: white;
+            border-radius: 8px;
+            padding-left: 2.5rem;
+            position: relative;
+        }
+
+        .summary-points li::before {
+            content: '✓';
+            position: absolute;
+            left: 1rem;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .glossary-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid #f5576c;
+        }
+
+        .glossary-term {
+            color: #2a5298;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .qa-container {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .qa-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .qa-question {
+            color: #2a5298;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .qa-answer {
+            display: none;
+            padding-top: 1rem;
+            border-top: 2px solid #e9ecef;
+            margin-top: 1rem;
+        }
+
+        .qa-answer.show {
+            display: block;
+        }
+
+        .flashcard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .flashcard {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .flashcard.flipped {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffeaa7 0%, #ffeaa7 100%);
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .process-step {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 10px;
+            border-left: 5px solid #2a5298;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
+            z-index: 1001;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                margin-top: 1rem;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🧬 BioGenética Interactiva</div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#conceptos">Conceptos</a></li>
+                <li><a href="#adn">ADN</a></li>
+                <li><a href="#replicacion">Replicación</a></li>
+                <li><a href="#meiosis">Meiosis</a></li>
+                <li><a href="#transcripcion">Transcripción</a></li>
+                <li><a href="#traduccion">Traducción</a></li>
+                <li><a href="#regulacion">Regulación</a></li>
+                <li><a href="#mendel">Mendel</a></li>
+                <li><a href="#glosario">Glosario</a></li>
+                <li><a href="#videos">Videos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero" id="inicio">
+        <h1>🧬 Del Gen a la Proteína</h1>
+        <p>Explora los fascinantes procesos de la genética molecular</p>
+    </section>
+
+    <div class="container">
+        <!-- CONCEPTOS BÁSICOS -->
+        <section class="section-card" id="conceptos">
+            <h2 class="section-title">📚 Conceptos Básicos Fundamentales</h2>
+            
+            <div class="content-box">
+                <h3>🎯 Objetivos de Aprendizaje</h3>
+                <ul>
+                    <li>Comprender el ADN como material genético y su estructura molecular</li>
+                    <li>Analizar los mecanismos de replicación del ADN</li>
+                    <li>Diferenciar entre mitosis y meiosis</li>
+                    <li>Describir los procesos de transcripción y traducción</li>
+                    <li>Entender la regulación de la expresión génica y epigenética</li>
+                    <li>Aplicar las leyes de Mendel en problemas de herencia</li>
+                </ul>
+            </div>
+
+            <div class="concept-map">
+                <h3>🗺️ Mapa Conceptual General</h3>
+                <div class="map-container">
+                    <div class="map-node">
+                        <h4>ADN</h4>
+                        <p>Material genético que almacena la información hereditaria</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Replicación</h4>
+                        <p>Proceso semiconservativo que duplica el ADN</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Expresión Génica</h4>
+                        <p>Transcripción (ADN→ARN) y Traducción (ARN→Proteína)</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>División Celular</h4>
+                        <p>Mitosis y Meiosis</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Regulación</h4>
+                        <p>Control epigenético de la expresión</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Herencia</h4>
+                        <p>Leyes de Mendel</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADN COMO MATERIAL GENÉTICO -->
+        <section class="section-card" id="adn">
+            <h2 class="section-title">🧬 El ADN como Material Genético</h2>
+
+            <div class="concept-map">
+                <h3>🗺️ Descubrimiento del ADN</h3>
+                <div class="map-container">
+                    <div class="map-node">
+                        <h4>1869 - Miescher</h4>
+                        <p>Descubre la "nucleína" en núcleos de glóbulos blancos</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>1928 - Griffith</h4>
+                        <p>Experimento de transformación bacteriana</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>1944 - Avery, MacLeod, McCarty</h4>
+                        <p>Demuestran que el ADN es el material genético</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>1952 - Hershey y Chase</h4>
+                        <p>Experimento con fagos confirma al ADN</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>1953 - Watson y Crick</h4>
+                        <p>Modelo de doble hélice del ADN</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <span>🔬 Experimentos Clave</span>
+                    <span>▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <h4>Experimento de Griffith (1928)</h4>
+                    <ul>
+                        <li><strong>Cepa S (lisa):</strong> Virulenta, con cápsula, letal</li>
+                        <li><strong>Cepa R (rugosa):</strong> No virulenta, sin cápsula</li>
+                        <li><strong>Resultado:</strong> Cepa R viva + Cepa S muerta → Ratón muere</li>
+                        <li><strong>Conclusión:</strong> Principio transformante pasa de S a R</li>
+                    </ul>
+
+                    <h4>Experimento de Avery, MacLeod y McCarty (1944)</h4>
+                    <ul>
+                        <li>Trataron extracto con enzimas específicas</li>
+                        <li>Proteinasas → Transformación ocurre</li>
+                        <li>Ribonucleasas → Transformación ocurre</li>
+                        <li>Desoxirribonucleasas → NO hay transformación</li>
+                        <li><strong>Conclusión:</strong> El ADN es el material genético</li>
+                    </ul>
+
+                    <h4>Experimento de Hershey y Chase (1952)</h4>
+                    <ul>
+                        <li>Marcaron proteínas con ³⁵S y ADN con ³²P</li>
+                        <li>El ³²P (ADN) entró a las bacterias</li>
+                        <li>El ³⁵S (proteínas) quedó fuera</li>
+                        <li><strong>Conclusión:</strong> El ADN es el material hereditario</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>📐 Estructura del ADN - Watson y Crick</h3>
+                <ul>
+                    <li><strong>Doble hélice:</strong> Dos cadenas antiparalelas</li>
+                    <li><strong>Esqueleto:</strong> Azúcar-fosfato en exterior</li>
+                    <li><strong>Bases:</strong> Interior, puentes de hidrógeno</li>
+                    <li><strong>Apareamiento:</strong> A-T (2 puentes), G-C (3 puentes)</li>
+                    <li><strong>Diámetro:</strong> 2 nm</li>
+                    <li><strong>Paso:</strong> 3.4 nm por vuelta</li>
+                    <li><strong>Reglas de Chargaff:</strong> A=T, G=C</li>
+                </ul>
+            </div>
+
+            <div class="summary-box">
+                <h3>📝 Resumen: ADN</h3>
+                <ul class="summary-points">
+                    <li>ADN identificado como material genético (Griffith 1928, Avery 1944, Hershey-Chase 1952)</li>
+                    <li>Estructura doble hélice (Watson-Crick 1953)</li>
+                    <li>Reglas de Chargaff: A=T, G=C</li>
+                    <li>Cromatina: eucromatina (activa) y heterocromatina (inactiva)</li>
+                    <li>Cromosomas: telómeros, centrómeros, orígenes de replicación</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- REPLICACIÓN DEL ADN -->
+        <section class="section-card" id="replicacion">
+            <h2 class="section-title">🔄 Replicación del ADN</h2>
+
+            <div class="content-box">
+                <h3>🔬 Experimento de Meselson y Stahl (1958)</h3>
+                <p>Demostraron el modelo <span class="highlight">semiconservativo</span>:</p>
+                <ul>
+                    <li>Cultivaron E. coli en ¹⁵N (pesado)</li>
+                    <li>Transferieron a ¹⁴N (ligero)</li>
+                    <li>Generación 1: ADN densidad intermedia</li>
+                    <li>Generación 2: 50% intermedio, 50% ligero</li>
+                    <li><strong>Conclusión:</strong> Confirma modelo semiconservativo</li>
+                </ul>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <span>📋 Proceso Detallado de Replicación</span>
+                    <span>▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <div class="process-step">
+                        <h4>1. Iniciación - Apertura</h4>
+                        <ul>
+                            <li><strong>Proteínas iniciadoras</strong> se unen a orígenes</li>
+                            <li><strong>Helicasa:</strong> Rompe puentes H usando ATP</li>
+                            <li><strong>Topoisomerasa:</strong> Evita superenrollamiento</li>
+                            <li><strong>Proteínas SSB:</strong> Estabilizan hebras simples</li>
+                        </ul>
+                    </div>
+
+                    <div class="process-step">
+                        <h4>2. Cebadores (Primers)</h4>
+                        <ul>
+                            <li><strong>ADN primasa</strong> sintetiza cebadores de ARN</li>
+                            <li>10-12 nucleótidos complementarios</li>
+                            <li>Proporcionan extremo 3'-OH libre</li>
+                        </ul>
+                    </div>
+
+                    <div class="process-step">
+                        <h4>3. Elongación</h4>
+                        <ul>
+                            <li><strong>ADN pol III</strong> (procariotas) o <strong>ADN pol δ/ε</strong> (eucariotas)</li>
+                            <li>Añaden desoxirribonucleótidos al 3'</li>
+                            <li>Síntesis siempre <span class="highlight">5'→3'</span></li>
+                            <li><strong>Hebra adelantada:</strong> Continua hacia horquilla</li>
+                            <li><strong>Hebra retrasada:</strong> Fragmentos de Okazaki (1000-2000 nt procariotas, 100-200 nt eucariotas)</li>
+                        </ul>
+                    </div>
+
+                    <div class="process-step">
+                        <h4>4. Remoción y Unión</h4>
+                        <ul>
+                            <li><strong>ADN pol I</strong> (procariotas) o <strong>RNasa H</strong> (eucariotas) elimina cebadores</li>
+                            <li>Reemplaza con ADN</li>
+                            <li><strong>ADN ligasa</strong> une fragmentos de Okazaki</li>
+                            <li>Requiere ATP o NAD+</li>
+                        </ul>
+                    </div>
+
+                    <div class="process-step">
+                        <h4>5. Corrección de Errores</h4>
+                        <ul>
+                            <li>Actividad <strong>exonucleasa 3'→5'</strong></li>
+                            <li>Elimina nucleótido incorrecto</li>
+                            <li>Tasa de error: ~1 por 10⁹ nucleótidos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>🧬 Replicación de Telómeros</h3>
+                <p><strong>Problema:</strong> Extremo 5' de hebra retrasada no puede ser completado</p>
+                <p><strong>Solución: Telomerasa</strong></p>
+                <ul>
+                    <li>Añade repeticiones teloméricas (TTAGGG en humanos)</li>
+                    <li>Enzima con ARN molde propio</li>
+                    <li>Activa en células germinales, stem cells, cancerosas</li>
+                    <li>Relacionada con envejecimiento</li>
+                </ul>
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Enzima</th>
+                        <th>Función</th>
+                        <th>Direccionalidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Helicasa</strong></td>
+                        <td>Separa hebras</td>
+                        <td>5'→3'</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Topoisomerasa</strong></td>
+                        <td>Alivia tensión</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Primasa</strong></td>
+                        <td>Sintetiza cebadores ARN</td>
+                        <td>5'→3'</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ADN Pol III</strong></td>
+                        <td>Síntesis principal</td>
+                        <td>5'→3'</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ADN Pol I</strong></td>
+                        <td>Remueve cebadores</td>
+                        <td>5'→3' y 3'→5'</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ADN Ligasa</strong></td>
+                        <td>Une fragmentos</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="summary-box">
+                <h3>📝 Resumen: Replicación</h3>
+                <ul class="summary-points">
+                    <li>Replicación semiconservativa (Meselson-Stahl)</li>
+                    <li>Inicia en orígenes de replicación</li>
+                    <li>Helicasa separa, topoisomerasa alivia tensión</li>
+                    <li>ADN polimerasa solo sintetiza 5'→3'</li>
+                    <li>Hebra adelantada: continua; retrasada: fragmentos Okazaki</li>
+                    <li>Telomerasa resuelve problema de extremos</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- MEIOSIS -->
+        <section class="section-card" id="meiosis">
+            <h2 class="section-title">🔬 Meiosis</h2>
+
+            <div class="concept-map">
+                <h3>🗺️ Mapa Conceptual: Meiosis</h3>
+                <div class="map-container">
+                    <div class="map-node">
+                        <h4>Definición</h4>
+                        <p>División reduccional: 2n → n</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Meiosis I</h4>
+                        <p>Separa homólogos (reduccional)</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Meiosis II</h4>
+                        <p>Separa cromátides (ecuacional)</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Variabilidad</h4>
+                        <p>Crossing over + distribución independiente</p>
+                    </div>
+                    <div class="map-node">
+                        <h4>Resultado</h4>
+                        <p>4 células haploides diferentes</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <span>📋 Fases Detalladas</span>
+                    <span>▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <h4>MEIOSIS I (Reduccional)</h4>
+                    
+                    <div class="process-step">
+                        <h4>Profase I - Subfases</h4>
+                        <ul>
+                            <li><strong>Leptoteno:</strong> Cromosomas se condensan</li>
+                            <li><strong>Cigoteno:</strong> Sinapsis, complejo sinaptonémico</li>
+                            <li><strong>Paquiteno:</strong> Bivalentes, <span class="highlight">crossing over</span></li>
+                            <li><strong>Diploteno:</strong> Quiasmas visibles</li>
+                            <li><strong>Diacinesis:</strong> Máxima condensación</li>
+                        </ul>
+                    </div>
+
+                    <div class="process-step">
+                        <h4>Metafase I</h4>
+                        <ul>
+                            <li>Bivalentes en plano ecuatorial</li>
+                            <li>Orientación aleatoria → variabilidad</li>
+                            <li>2ⁿ combinaciones posibles</li>
+                        </ul>
+                    </div>
+
+                    <div class="process-step">
+                        <h4>Anafase I</h4>
+                        <ul>
+                            <li>Cromosomas homólogos se separan</li>
+                            <li>Cromátides hermanas permanecen unidas</li>
+                        </ul>
+                    </div>
+
+                    <div class="process-step">
+                        <h4>Telofase I y Citocinesis</h4>
+                        <ul>
+                            <li>2 células haploides (cromosomas duplicados)</li>
+                        </ul>
+                    </div>
+
+                    <h4>MEIOSIS II (Ecuacional)</h4>
+                    <div class="process-step">
+                        <h4>Similar a mitosis</h4>
+                        <ul>
+                            <li>Separa cromátides hermanas</li>
+                            <li>4 células haploides finales</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>🎲 Fuentes de Variabilidad</h3>
+                <ol>
+                    <li><strong>Crossing Over (Profase I):</strong>
+                        <ul>
+                            <li>Intercambio entre cromátides no hermanas</li>
+                            <li>Recombinación genética</li>
+                        </ul>
+                    </li>
+                    <li><strong>Distribución Independiente (Metafase I):</strong>
+                        <ul>
+                            <li>2²³ = 8,388,608 combinaciones en humanos</li>
+                        </ul>
+                    </li>
+                    <li><strong>Fecundación Aleatoria:</strong>
+                        <ul>
+                            <li>(2²³)² = ~70 billones posibles</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="content-box">
+                <h3>⚠️ Aneuploidías (No disyunción)</h3>
+                <ul>
+                    <li><strong>Down (Trisomía 21):</strong> 47,XX,+21 o 47,XY,+21 (1/800)</li>
+                    <li><strong>Turner (Monosomía X):</strong> 45,X0</li>
+                    <li><strong>Klinefelter:</strong> 47,XXY (1/1000 hombres)</li>
+                    <li><strong>Triple X:</strong> 47,XXX (1/1000 mujeres)</li>
+                    <li><strong>XYY:</strong> 47,XYY (1/1000 hombres)</li>
+                </ul>
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Característica</th>
+                        <th>Mitosis</th>
+                        <th>Meiosis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Células</strong></td>
+                        <td>Somáticas</td>
+                        <td>Germinales</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Divisiones</strong></td>
+                        <td>1</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Resultado</strong></td>
+                        <td>2 diploides (2n)</td>
+                        <td>4 haploides (n)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Crossing over</strong></td>
+                        <td>No</td>
+                        <td>Sí (Profase I)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Variabilidad</strong></td>
+                        <td>No</td>
+                        <td>Sí</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- TRANSCRIPCIÓN -->
+        <section class="section-card" id="transcripcion">
+            <h2 class="section-title">📝 Transcripción</h2>
+
+            <div class="content-box">
+                <h3>🎯 Concepto General</h3>
+                <p><strong>Transcripción:</strong> Síntesis de ARN a partir de ADN</p>
+                <ul>
+                    <li>ARN polimerasa separa cadenas de ADN</li>
+                    <li>Une ribonucleótidos complementarios</li>
+                    <li>Elongación: 5'→3'</li>
+                    <li>Hebra molde: lectura 3'→5'</li>
+                </ul>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <span>📋 Proceso de Transcripción</span>
+                    <span>▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <h4>1. INICIACIÓN</h4>
+                    <ul>
+                        <li><strong>Promotor:</strong> Región que indica dónde iniciar
+                            <ul>
+                                <li>Procariotas: -35 (TTGACA) y -10 (TATAAT)</li>
+                                <li>Eucariotas: Caja TATA (~-30)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Procariotas:</strong> Holoenzima (ARN pol + factor σ)</li>
+                        <li><strong>Eucariotas:</strong> Factores de transcripción + ARN pol II</li>
+                        <li>Apertura de ~14 pb (burbuja de transcripción)</li>
+                    </ul>
+
+                    <h4>2. ELONGACIÓN</h4>
+                    <ul>
+                        <li>ARN pol avanza 3'→5' sobre molde</li>
+                        <li>Sintetiza ARN 5'→3'</li>
+                        <li>Apareamiento: A-UTP, T-ATP, G-CTP, C-GTP</li>
+                        <li>Híbrido ADN-ARN de ~8-9 pb</li>
+                        <li>Velocidad: 40-80 nt/segundo</li>
+                        <li>No requiere cebador</li>
+                    </ul>
+
+                    <h4>3. TERMINACIÓN</h4>
+                    <ul>
+                        <li><strong>Procariotas:</strong>
+                            <ul>
+                                <li>Dependiente de Rho: proteína Rho desprende polimerasa</li>
+                                <li>Independiente: horquilla + poli-U</li>
+                            </ul>
+                        </li>
+                        <li><strong>Eucariotas:</strong>
+                            <ul>
+                                <li>Señal AAUAAA</li>
+                                <li>Corte y poliadenilación</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>🧬 ARN Polimerasas en Eucariotas</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>ARN Pol</th>
+                            <th>Localización</th>
+                            <th>Transcribe</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>I</strong></td>
+                            <td>Nucléolo</td>
+                            <td>ARNr 28S, 18S, 5.8S</td>
+                        </tr>
+                        <tr>
+                            <td><strong>II</strong></td>
+                            <td>Nucleoplasma</td>
+                            <td>ARNm, ARNsn, microARN</td>
+                        </tr>
+                        <tr>
+                            <td><strong>III</strong></td>
+                            <td>Nucleoplasma</td>
+                            <td>ARNt, ARNr 5S</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-box">
+                <h3>✂️ Procesamiento del ARN (Eucariotas)</h3>
+                
+                <h4>1. Cap 5'</h4>
+                <ul>
+                    <li>7-metilguanosina</li>
+                    <li>Enlace 5'-5' trifosfato</li>
+                    <li>Protección, reconocimiento ribosoma</li>
+                </ul>
+
+                <h4>2. Poliadenilación 3'</h4>
+                <ul>
+                    <li>Señal: AAUAAA</li>
+                    <li>~200-250 adeninas</li>
+                    <li>Estabilidad, exportación</li>
+                </ul>
+
+                <h4>3. Splicing</h4>
+                <ul>
+                    <li>Eliminación de <span class="highlight">intrones</span></li>
+                    <li>Unión de <span class="highlight">exones</span></li>
+                    <li>Espliceosoma (snRNPs: U1, U2, U4, U5, U6)</li>
+                    <li>Señales: 5' GU, 3' AG, punto A</li>
+                    <li><strong>Splicing alternativo:</strong> Múltiples proteínas de un gen</li>
+                </ul>
+            </div>
+
+            <div class="summary-box">
+                <h3>📝 Resumen: Transcripción</h3>
+                <ul class="summary-points">
+                    <li>Síntesis de ARN 5'→3' por ARN polimerasa</li>
+                    <li>Inicia en promotores (caja TATA en eucariotas)</li>
+                    <li>3 ARN polimerasas en eucariotas (I, II, III)</li>
+                    <li>Pre-ARNm: cap 5', poli-A 3', splicing</li>
+                    <li>Splicing alternativo genera diversidad proteica</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- TRADUCCIÓN -->
+        <section class="section-card" id="traduccion">
+            <h2 class="section-title">🔤 Traducción</h2>
+
+            <div class="content-box">
+                <h3>🧬 El Código Genético</h3>
+                <h4>Características:</h4>
+                <ol>
+                    <li><strong>Triplete:</strong> 3 nucleótidos = 1 aminoácido</li>
+                    <li><strong>64 codones:</strong> 61 codifican aa, 3 stop (UAA, UAG, UGA)</li>
+                    <li><strong>Degenerado:</strong> Múltiples codones por aa</li>
+                    <li><strong>No ambiguo:</strong> Cada codón = 1 aa</li>
+                    <li><strong>Casi universal</strong></li>
+                    <li><strong>No superpuesto</strong></li>
+                    <li><strong>Lectura 5'→3'</strong></li>
+                    <li><strong>AUG = Met (inicio)</strong></li>
+                </ol>
+            </div>
+
+            <div class="collapsible">
+                <div class="collapsible-header" onclick="toggleCollapsible(this)">
+                    <span>📋 Proceso de Traducción</span>
+                    <span>▼</span>
+                </div>
+                <div class="collapsible-content">
+                    <h4>Componentes Clave</h4>
+                    <ul>
+                        <li><strong>ARNt:</strong> Adaptador
+                            <ul>
+                                <li>Anticodón reconoce codón</li>
+                                <li>Extremo 3' lleva aminoácido</li>
+                                <li>Cargado por aminoacil-ARNt sintetasa</li>
+                                <li><strong>Wobble:</strong> Flexibilidad en 3ª base</li>
+                            </ul>
+                        </li>
+                        <li><strong>Ribosoma:</strong>
+                            <ul>
+                                <li>Subunidades mayor y menor</li>
+                                <li><span class="highlight">Sitio A:</span> Entrada aminoacil-ARNt</li>
+                                <li><span class="highlight">Sitio P:</span> Peptidil-ARNt</li>
+                                <li><span class="highlight">Sitio E:</span> Salida</li>
+                                <li>Peptidil transferasa (ribozima)</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h4>INICIACIÓN</h4>
+                    <div class="process-step">
+                        <ul>
+                            <li><strong>Procariotas:</strong> Secuencia Shine-Dalgarno, fMet</li>
+                            <li><strong>Eucariotas:</strong> Cap 5', escaneo, Met</li>
+                            <li>ARNt iniciador en sitio P</li>
+                        </ul>
+                    </div>
+
+                    <h4>ELONGACIÓN</h4>
+                    <div class="process-step">
+                        <ol>
+                            <li><strong>Entrada ARNt:</strong> EF-Tu/eEF1α + GTP</li>
+                            <li><strong>Enlace peptídico:</strong> Peptidil transferasa</li>
+                            <li><strong>Translocación:</strong> EF-G/eEF2 + GTP
+                                <ul>
+                                    <li>Ribosoma avanza 3 nt</li>
+                                    <li>ARNt: P→E (sale), A→P</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <h4>TERMINACIÓN</h4>
+                    <div class="process-step">
+                        <ul>
+                            <li>Codón stop (UAA, UAG, UGA)</li>
+                            <li>Factores de liberación (RF/eRF)</li>
+                            <li>Hidrólisis → liberación polipéptido</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>⚡ Polirribosomas</h3>
+                <ul>
+                    <li>Múltiples ribosomas en un ARNm</li>
+                    <li>Síntesis simultánea de muchas copias</li>
+                    <li>"Cuentas en un collar"</li>
+                </ul>
+            </div>
+
+            <div class="summary-box">
+                <h3>📝 Resumen: Traducción</h3>
+                <ul class="summary-points">
+                    <li>Código genético: 64 codones, 20 aa, degenerado</li>
+                    <li>ARNt cargado por aminoacil-ARNt sintetasa</li>
+                    <li>Ribosoma: sitios A, P, E; peptidil transferasa es ribozima</li>
+                    <li>Iniciación: Procariotas (Shine-Dalgarno), Eucariotas (cap 5')</li>
+                    <li>Elongación: Entrada, enlace peptídico, translocación</li>
+                    <li>Terminación: Codones stop, factores de liberación</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- REGULACIÓN Y EPIGENÉTICA -->
+        <section class="section-card" id="regulacion">
+            <h2 class="section-title">🎛️ Regulación Génica y Epigenética</h2>
+
+            <div class="content-box">
+                <h3>🎚️ Niveles de Regulación</h3>
+                <ol>
+                    <li><strong>Transcripcional:</strong> Factores de transcripción, enhancers/silencers</li>
+                    <li><strong>Post-transcripcional:</strong> Splicing alternativo, estabilidad ARNm</li>
+                    <li><strong>Traduccional:</strong> Control de iniciación, microARN</li>
+                    <li><strong>Post-traduccional:</strong> Modificaciones, degradación</li>
+                </ol>
+            </div>
+
+            <div class="content-box">
+                <h3>🧬 Epigenética</h3>
+                <p><strong>Definición:</strong> Cambios heredables sin alterar secuencia de ADN</p>
+                
+                <h4>Mecanismos:</h4>
+                <ol>
+                    <li><strong>Metilación del ADN:</strong>
+                        <ul>
+                            <li>Citosinas en islas CpG</li>
+                            <li>→ Silenciamiento génico</li>
+                            <li>DNMT1, DNMT3a, DNMT3b</li>
+                        </ul>
+                    </li>
+                    <li><strong>Modificación de Histonas:</strong>
+                        <ul>
+                            <li><span class="highlight">Acetilación:</span> Activación (HATs/HDACs)</li>
+                            <li><span class="highlight">Metilación:</span> Depende posición
+                                <ul>
+                                    <li>H3K4me3 → Activa</li>
+                                    <li>H3K9me3, H3K27me3 → Reprime</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>ARN no codificantes:</strong> microARN, lncRNA (Xist)</li>
+                </ol>
+            </div>
+
+            <div class="content-box">
+                <h3>🔬 Ejemplos Epigenéticos</h3>
+                <ul>
+                    <li><strong>Inactivación del X:</strong> ARN Xist → cuerpo de Barr</li>
+                    <li><strong>Impronta genómica:</strong> Expresión dependiente del origen parental
+                        <ul>
+                            <li>IGF2: solo paterno</li>
+                            <li>H19: solo materno</li>
+                        </ul>
+                    </li>
+                    <li><strong>Efectos ambientales:</strong> Dieta, estrés, tóxicos</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- MENDEL -->
+        <section class="section-card" id="mendel">
+            <h2 class="section-title">🌱 Leyes de Mendel</h2>
+
+            <div class="content-box">
+                <h3>🔬 Experimentos de Mendel</h3>
+                <p><em>Pisum sativum</em> (guisantes) - 7 caracteres</p>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Carácter</th>
+                            <th>Dominante</th>
+                            <th>Recesivo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Semilla</td>
+                            <td>Redonda (R)</td>
+                            <td>Arrugada (r)</td>
+                        </tr>
+                        <tr>
+                            <td>Color semilla</td>
+                            <td>Amarilla (Y)</td>
+                            <td>Verde (y)</td>
+                        </tr>
+                        <tr>
+                            <td>Flor</td>
+                            <td>Púrpura (P)</td>
+                            <td>Blanca (p)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-box">
+                <h3>📊 Primera Ley: Segregación</h3>
+                <p><strong>Cruce monohíbrido:</strong> PP × pp → F₁: 100% Pp (púrpura)</p>
+                <p>F₁ × F₁ → F₂: <span class="highlight">3:1</span> (fenotipo)</p>
+                <p>Genotipo: 1 PP : 2 Pp : 1 pp</p>
+                <p><strong>Enunciado:</strong> "Alelos se separan en gametos"</p>
+            </div>
+
+            <div class="content-box">
+                <h3>📊 Segunda Ley: Distribución Independiente</h3>
+                <p><strong>Cruce dihíbrido:</strong> YYRR × yyrr</p>
+                <p>F₂: <span class="highlight">9:3:3:1</span></p>
+                <ul>
+                    <li>9 amarillo-liso</li>
+                    <li>3 amarillo-arrugado</li>
+                    <li>3 verde-liso</li>
+                    <li>1 verde-arrugado</li>
+                </ul>
+                <p><strong>Enunciado:</strong> "Genes diferentes se distribuyen independientemente"</p>
+            </div>
+
+            <div class="content-box">
+                <h3>🎨 Herencia No Mendeliana</h3>
+                <ul>
+                    <li><strong>Dominancia incompleta:</strong> Fenotipo intermedio (ej: flor rosada)</li>
+                    <li><strong>Codominancia:</strong> Ambos alelos se expresan (ej: grupo AB)</li>
+                    <li><strong>Alelos múltiples:</strong> >2 alelos en población (ej: ABO)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- GLOSARIO -->
+        <section class="section-card" id="glosario">
+            <h2 class="section-title">📖 Glosario</h2>
+            <div class="glossary-grid">
+                <div class="glossary-item">
+                    <div class="glossary-term">ADN</div>
+                    <p>Ácido desoxirribonucleico. Material genético de doble hélice</p>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">ARN</div>
+                    <p>Ácido ribonucleico. ARNm, ARNt, ARNr</p>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Alelo</div>
+                    <p>Forma alternativa de un gen</p>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Codón</div>
+                    <p>Triplete de nucleótidos que codifica un aminoácido</p>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Crossing Over</div>
+                    <p>Intercambio entre cromátides no hermanas en meiosis</p>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Diploide (2n)</div>
+                    <p>Dos juegos de cromosomas</p>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Epigenética</div>
+                    <p>Cambios heredables sin alterar ADN</p>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Exón</div>
+                    <p>Secuencia codificante que permanece en ARNm</p>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Haploide (n)</div>
+                    <p>Un juego de cromosomas (gametos)</p>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Intrón</div>
+                    <p>Secuencia no codificante eliminada en splicing</p>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Meiosis</div>
+                    <p>División reduccional que produce gametos</p>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Promotor</div>
+                    <p>Región de inicio de transcripción</p>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Replicación</div>
+                    <p>Duplicación semiconservativa del ADN</p>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Splicing</div>
+                    <p>Eliminación de intrones y unión de exones</p>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Traducción</div>
+                    <p>Síntesis de proteínas en ribosomas</p>
+                </div>
+                <div class="glossary-item">
+                    <div class="glossary-term">Transcripción</div>
+                    <p>Síntesis de ARN a partir de ADN</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIDEOS -->
+        <section class="section-card" id="videos">
+            <h2 class="section-title">🎥 Videos Educativos</h2>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/6ZlCwGqS8h0" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>Estructura del ADN</h4>
+                        <p>Doble hélice y apareamiento de bases</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/RqjVhwjhc9Y" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>Replicación del ADN</h4>
+                        <p>Proceso completo de replicación</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/b86ueXW0KPU" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>Mitosis y Meiosis</h4>
+                        <p>Comparación de divisiones celulares</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/WsofH466lqk" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>Transcripción</h4>
+                        <p>De ADN a ARN</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/5bLEDd-PSTQ" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>Traducción</h4>
+                        <p>Síntesis de proteínas</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/YjWuVrzvZYA" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>Epigenética</h4>
+                        <p>Regulación sin cambiar ADN</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CUESTIONARIOS -->
+        <section class="section-card">
+            <h2 class="section-title">📝 Cuestionarios</h2>
+            
+            <div class="quiz-container">
+                <h3>ADN y Replicación</h3>
+                <div class="quiz-question">
+                    <p><strong>1. ¿Qué experimento demostró que el ADN es material genético?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) Griffith</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">B) Avery, MacLeod, McCarty</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) Watson y Crick</div>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><strong>2. ¿En qué dirección sintetiza ADN la polimerasa?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">A) 5'→3'</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">B) 3'→5'</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <h3>Meiosis</h3>
+                <div class="quiz-question">
+                    <p><strong>1. ¿Cuántas células resultan de la meiosis?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">A) 4 haploides</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">B) 2 diploides</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <h3>Transcripción y Traducción</h3>
+                <div class="quiz-question">
+                    <p><strong>1. ¿Qué ARN polimerasa transcribe ARNm?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">A) ARN Pol I</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">B) ARN Pol II</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">C) ARN Pol III</div>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p><strong>2. ¿Cuántos codones hay en el código genético?</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">A) 64</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">B) 20</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container">
+                <h3>Mendel</h3>
+                <div class="quiz-question">
+                    <p><strong>1. Proporción F₂ en cruce monohíbrido:</strong></p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" onclick="checkAnswer(this, true)">A) 3:1</div>
+                        <div class="quiz-option" onclick="checkAnswer(this, false)">B) 9:3:3:1</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</div>
+
+    <footer style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 3rem 2rem; text-align: center; margin-top: 4rem;">
+        <h3>🧬 BioGenética Interactiva</h3>
+        <p>Material educativo 2026</p>
+        <p>Alberts et al. Biología Celular (5ª ed.) | Campbell Biología (2024)</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        function toggleCollapsible(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('span:last-child');
+            content.classList.toggle('active');
+            icon.textContent = content.classList.contains('active') ? '▲' : '▼';
+        }
+
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+
+        function checkAnswer(option, isCorrect) {
+            const parent = option.parentElement;
+            const options = parent.getElementsByClassName('quiz-option');
+            for (let opt of options) {
+                opt.classList.remove('correct', 'incorrect');
+                opt.style.pointerEvents = 'none';
+            }
+            if (isCorrect) {
+                option.classList.add('correct');
+                option.innerHTML += ' ✓';
+            } else {
+                option.classList.add('incorrect');
+                option.innerHTML += ' ✗';
+            }
+        }
+
+        function toggleAnswer(element) {
+            element.nextElementSibling.classList.toggle('show');
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.onscroll = function() {
+            const backToTop = document.getElementById('backToTop');
+            const progressBar = document.getElementById('progressBar');
+            
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+            
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            progressBar.style.width = scrolled + "%";
+        };
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
